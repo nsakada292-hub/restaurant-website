@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us-MALUB Restaurant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+</head>
+    <style type="text/css">
+        /* Custom animation for the fade-in-up effect */
+        .animate-fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <!-- Mentor -->
+    <style>
+  .typewriter {
+    border-right: 2px solid #60A5FA;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #60A5FA; }
+  }
+</style>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #14532d; --accent: #ffffff; }
+
+        /* Dark mode smooth transition */
+        *, *::before, *::after { transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease; }
+        img, svg, button { transition: none !important; }
+
+        /* Navbar */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeInDown 0.4s ease-out forwards; }
+        .nav-link { position: relative; overflow: hidden; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.3s ease-out; }
+        .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+        .mobile-menu { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+
+        /* Hero */
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
+        .float-shoe { animation: float 3s ease-in-out infinite; }
+
+        /* Cards */
+        .product-card { transition: transform 0.18s ease, box-shadow 0.18s ease !important; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
+        .dark .product-card:hover { box-shadow: 0 12px 28px rgba(0,0,0,0.4); }
+        .arrow { display: inline-block; transition: transform 0.3s ease; }
+
+        /* Dark mode toggle button */
+        .toggle-track { width: 52px; height: 28px; background: #d1d5db; border-radius: 9999px; position: relative; cursor: pointer; transition: background 0.3s ease !important; }
+        .dark .toggle-track { background: #16a34a; }
+        .toggle-thumb { width: 22px; height: 22px; background: white; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: transform 0.3s ease !important; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+        .dark .toggle-thumb { transform: translateX(24px); }
+        .toggle-icon { font-size: 12px; line-height: 1; }
+
+        /* Hamburger animation */
+        .ham-line { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease !important; }
+        .ham-open .ham-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .ham-open .ham-line:nth-child(2) { opacity: 0; }
+        .ham-open .ham-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* Mobile menu slide */
+        #mobileMenu { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1) !important; }
+        #mobileMenu.open { max-height: 500px; }
+
+        /* Section card hover */
+        .category-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+        .category-card:hover { transform: translateY(-2px); }
+
+        /* Scrollbar dark */
+        .dark ::-webkit-scrollbar-track { background: #1f2937; }
+        .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+    </style>
+<body class="bg-gray-50 dark:bg-gray-950 transition-colors duration-300 loading">
+
+<!-- ── NAVBAR ── -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-green-200 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="text-2xl font-black text-green-600 dark:text-green-400 tracking-tight group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors">MALUB</span>
+                <span class="hidden sm:inline text-xs font-medium text-gray-400 dark:text-gray-500 tracking-widest uppercase mt-1">Restaurant</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="./homePage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Home</a>
+                <a href="./menuPage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Menu</a>
+                <a href="./aboutPage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">About Us</a>
+                <a href="./services.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Services</a>
+                <a href="./contactPage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Contact</a>
+            </div>
+
+            <!-- Desktop Right -->
+            <div class="hidden md:flex items-center gap-3">
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" aria-label="Toggle dark mode" onclick="toggleDark()">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <span class="toggle-icon" id="toggleIcon">☀️</span>
+                        </div>
+                    </div>
+                </button>
+                <a href="./sign_in.html" class="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors shadow-sm">Sign In</a>
+            </div>
+
+            <!-- Mobile Right: toggle + hamburger -->
+            <div class="flex md:hidden items-center gap-3">
+                <button aria-label="Toggle dark mode" onclick="toggleDark()">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <span class="toggle-icon" id="toggleIconMobile">☀️</span>
+                        </div>
+                    </div>
+                </button>
+                <button id="mobileMenuButton" class="flex flex-col gap-1.5 p-1.5 text-gray-700 dark:text-gray-200 focus:outline-none" aria-label="Open menu">
+                    <span class="ham-line"></span>
+                    <span class="ham-line"></span>
+                    <span class="ham-line"></span>
+                </button>
+            </div>
+
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 py-3 space-y-1">
+                <a href="./homePage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">🏠 Home</a>
+                <a href="./menuPage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">🍽️ Menu</a>
+                <a href="./aboutPage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">👨‍🍳 About Us</a>
+                <a href="./services.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">🛎️ Services</a>
+                <a href="./contactPage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">📞 Contact</a>
+                <div class="pt-2 pb-1">
+                    <a href="./sign_in.html" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-3 rounded-xl transition-colors">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About us -->
+    <section class="grid-corners pt-16 pb-16 relative bg-green-100 dark:bg-black" id="why">
+
+  <!-- FOOD BG HERO — full width, just like contact page -->
+  <div style="
+    background-image: linear-gradient(rgba(10,38,20,0.60), rgba(8,30,16,0.70)),
+    url('../asset/header_food2.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 24px 60px;
+    width: 100%;
+  ">
+    <div data-aos="zoom-in-down" class="animate-in mx-auto max-w-3xl text-center">
+      <h2 class="sm:text-8xl text-8xl text-white font-semibold tracking-tight mt-4">
+        <span>About <span class="text-green-400 italic">Us</span></span>
+      </h2>
+      <p class="mx-auto mt-3 max-w-2xl text-white/70 text-sm sm:text-base">
+        Together, we don't just complete projects; we grow as a community and push the boundaries of what is possible.
+      </p>
+    </div>
+  </div>
+
+  <!-- CAROUSEL stays below on normal bg -->
+  <div class="sm:px-6 lg:px-8 max-w-7xl mr-auto ml-auto pr-4 pl-4 mt-16">
+
+        <div data-aos="zoom-in-up" class="flex mt-16 relative items-center justify-center" style="perspective: 1200px;">
+          <button id="teamPrevBtn" class="absolute left-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/50 ring-1 ring-white/10 hover:bg-white/5 transition" aria-label="Previous">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-lime-300">
+              <path d="m15 18-6-6 6-6" class=""></path>
+            </svg>
+          </button>
+
+          <div class="relative w-full max-w-md h-[500px] flex items-center justify-center">
+            <div class="flex transition-transform duration-500 ease-out absolute top-0 right-0 bottom-0 left-0 items-center justify-center" style="transform-style: preserve-3d;" id="carouselTrack">
+            <div class="carousel-card absolute w-80 h-[460px] rounded-2xl overflow-hidden ring-1 ring-white/10 transition-all duration-500" data-index="0" style="transform: translateX(-360px) scale(0.85) rotateY(20deg); opacity: 0.4; filter: brightness(0.6); z-index: 2;">
+              <img src="../asset/image_member/sb_1.jpg" alt="Team member" class="h-full w-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs ring-1 ring-white/20 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-lime-300">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" class=""></path>
+                    <circle cx="9" cy="7" r="4" class=""></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" class=""></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" class=""></path>
+                  </svg>
+                  <span class="text-white">Sign-in</span>
+                </div>
+                <p class="text-xl font-semibold text-white tracking-tight">
+                  SamBat SamBer
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-card absolute w-80 h-[460px] rounded-2xl overflow-hidden ring-1 ring-white/10 transition-all duration-500" data-index="1" style="transform: translateX(-180px) scale(0.9) rotateY(10deg); opacity: 0.6; filter: brightness(0.75); z-index: 5;">
+              <img src="../asset/image_member/sr_1.jpg" alt="Team member" class="h-full w-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs ring-1 ring-white/20 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-lime-300">
+                    <path d="M12 8V4H8" class=""></path>
+                    <rect width="16" height="12" x="4" y="8" rx="2" class=""></rect>
+                    <path d="M2 14h2" class=""></path>
+                    <path d="M20 14h2" class=""></path>
+                    <path d="M15 13v2" class=""></path>
+                    <path d="M9 13v2" class=""></path>
+                  </svg>
+                  <span class="text-white">Menu Page</span>
+                </div>
+                <p class="text-xl font-semibold tracking-tight text-white">
+                  Mon Srey Roth
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-card absolute w-80 h-[460px] rounded-2xl overflow-hidden ring-2 ring-lime-300/40 bg-lime-400/10 transition-all duration-500" data-index="2" style="transform: translateX(0px) scale(1) rotateY(0deg); opacity: 1; z-index: 10; box-shadow: rgba(163, 230, 53, 0.3) 0px 20px 60px; filter: brightness(1);">
+              <img src="../asset/image_member/skd_1.jpg" alt="Team member" class="h-full w-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+              <div class="absolute top-6 right-6">
+                <!-- <div class="inline-flex items-center gap-1 rounded-full bg-lime-400 px-3 py-1.5 text-xs font-medium text-neutral-950">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                    <path d="M12 2v20M2 12h20" class=""></path>
+                  </svg>
+                  Featured
+                </div> -->
+              </div>
+              <div class="absolute bottom-8 left-8 right-8">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs ring-1 ring-white/20 backdrop-blur-md mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-lime-300">
+                    <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" class=""></path>
+                    <rect width="20" height="14" x="2" y="6" rx="2" class=""></rect>
+                  </svg>
+                  <span class="text-white">Group Leader</span>
+                </div>
+                <p class="text-3xl font-bold text-white tracking-tight mb-1">
+                  Neourm Sakada
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-card absolute w-80 h-[460px] rounded-2xl overflow-hidden ring-1 ring-white/10 transition-all duration-500" data-index="3" style="transform: translateX(180px) scale(0.9) rotateY(-10deg); opacity: 0.6; filter: brightness(0.75); z-index: 5;">
+              <img src="../asset/image_member/rtn_1.jpg" alt="Team member" class="h-full w-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs ring-1 ring-white/20 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-lime-300">
+                    <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" class="">
+                    </path>
+                  </svg>
+                  <span class="text-white">Services Page</span>
+                </div>
+                <p class="text-xl font-semibold tracking-tight text-white">
+                  Roun Rothana
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-card absolute w-80 h-[460px] rounded-2xl overflow-hidden ring-1 ring-white/10 transition-all duration-500" data-index="4" style="transform: translateX(360px) scale(0.85) rotateY(-20deg); opacity: 0.4; filter: brightness(0.6); z-index: 2;">
+              <img src="../asset/image_member/vtn_1.jpg" alt="Team member" class="h-full w-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs ring-1 ring-white/20 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-lime-300">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" class="">
+                    </path>
+                    <polyline points="7.5 4.21 12 6.81 16.5 4.21" class=""></polyline>
+                    <polyline points="7.5 19.79 7.5 14.6 3 12" class=""></polyline>
+                    <polyline points="21 12 16.5 14.6 16.5 19.79" class=""></polyline>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" class=""></polyline>
+                    <line x1="12" x2="12" y1="22.08" y2="12" class=""></line>
+                  </svg>
+                  <span class="text-white">Footer</span>
+                </div>
+                <p class="text-xl font-semibold tracking-tight text-white">
+                  Lorm Chhina Vathana
+                </p>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <button id="teamNextBtn" class="absolute right-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/50 ring-1 ring-white/10 hover:bg-white/5 transition" aria-label="Next">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-lime-300">
+              <path d="m9 18 6-6-6-6" class=""></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mentor -->
+    <section id="home" class="flex flex-col lg:flex-row items-center justify-center text-center py-16 px-6 bg-green-100 dark:bg-black">
+  <div class="w-full sm:w-full lg:w-1/2 flex flex-col justify-center items-center">
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight mt-20 pb-4 text-black dark:text-white">
+        Our Mentor!
+      <div class="py-2"></div>
+      <span class="text-blue-400 whitespace-nowrap">
+        <span class="typewriter">Srorng Sokcheat</span>
+      </span>
+    </h1>
+
+    <!-- Mobile image (only shows on small screens) -->
+    <div class="lg:hidden p-10">
+      <div class="w-40 h-40 rounded-full border-4 border-gray-600 shadow-lg overflow-hidden">
+        <img src="../asset/image_member/mentor.jpg" alt="Srorng Sokcheat" class="w-full h-full object-cover" />
+      </div>
+    </div>
+
+    <!-- Desktop image -->
+    <!-- <div class="hidden lg:flex lg:w-1/2 justify-center items-center pt-20">
+        <div class="w-60 h-60 rounded-full border-2 border-gray-600 shadow-lg overflow-hidden">
+            <img src="../asset/image_member/mentor.jpg" alt="Srorng Sokcheat" class="w-full h-full object-cover" />
+        </div>
+    </div> -->
+    
+    <p class="max-w-xl text-black dark:text-white text-lg leading-relaxed text-center">
+    
+  A good mentor guided me throughout every step of my project, always offering support and valuable advice.
+   Teacher Srong Sokcheat helped me overcome challenges and stay focused when things became difficult. Her experience
+    and encouragement gave me the confidence to keep going. Without Teacher Srong Sokcheat guidance, I wouldn’t have been able
+     to complete this project successfully. I am truly grateful for her patience and dedication.    </p>
+
+    
+    <div class="flex gap-6 mt-8">
+    <a href="https://www.facebook.com/srorng.sokcheat" target="_blank" rel="noopener noreferrer" class="p-3 rounded-full bg-white/10 hover:bg-blue-500 dark:bg-white dark:hover:bg-blue-500 transition duration-300" aria-label="Follow me on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+    </a>
+     
+    <a href="https://github.com/Sokcheatsrorng/case-study-tailwind-m1.git" target="_blank" rel="noopener noreferrer" class="p-3 rounded-full bg-white/10 hover:bg-gray-400 dark:bg-white dark:hover:bg-blue-500 transition duration-300" aria-label="Check out my GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+    </a>
+    <a href="https://t.me/Sokcheat_srorng" target="_blank" rel="noopener noreferrer" class="p-3 rounded-full bg-white/10 hover:bg-gray-400 dark:bg-white dark:hover:bg-blue-500 transition duration-300" aria-label="Message me on Telegram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.820 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.800-.979-.641-.344-1.033.207-1.584.144-.144 2.661-2.434 2.71-2.64.005-.023.01-.106-.04-.15-.054-.043-.131-.028-.188-.017l-.197.016c-.198.017-.728.143-2.082.86-1.02.55-1.984 1.07-2.71 1.47-.437.245-.788.366-1.056.337-.276-.03-.857-.188-1.279-.345-.514-.193-.924-.296-.89-.626.019-.18.336-.364.953-.554 3.738-1.631 6.23-2.709 7.475-3.235 3.557-1.533 4.296-1.8 4.777-1.808z"/>
+        </svg>
+    </a>
+    </div>
+  </div>
+  
+  <div class="hidden lg:flex lg:w-1/2 justify-center items-center pt-20">
+  <div class="w-40 h-40 sm:w-48 sm:h-48 md:w-52 md:h-52 lg:w-60 lg:h-60 xl:w-72 xl:h-72 rounded-full border-2 border-gray-600 shadow-lg overflow-hidden">
+    <img src="../asset/image_member/mentor.jpg" alt="Srorng Sokcheat" class="w-full h-full object-cover" />
+  </div>
+</div>
+</section>
+
+    <!-- Timeline Container -->
+    <section class="container mx-auto px-4 py-16 md:py-24 bg-green-100 dark:bg-black">
+        <h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 dark:text-white mb-4">Get to Know Us</h2>
+        <p class="text-lg text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">A collaborative team focused on strong communication and building high-quality, user-friendly web experiences together.</p>
+
+        <div class="relative">
+            <!-- Central Vertical Line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-200 dark:bg-blue-900/50"></div>
+
+            <!-- Timeline Items Container -->
+            <div class="space-y-12 md:space-y-24">
+                <!-- Item 1 SKD -->
+                <div data-aos="flip-right" class="timeline-item flex flex-col md:flex-row items-center">
+    
+    <!-- Left Side Content (Desktop) -->
+    <div class="hidden md:block md:w-1/2 pr-12"></div>
+
+    <!-- Icon on Central Line -->
+    <div class="absolute left-1/2 transform -translate-x-1/2 z-10">
+        <div data-aos="zoom-in" data-aos-delay="300"
+            class="flex items-center justify-center w-12 h-12 rounded-full bg-green-500 text-white border-4 border-white dark:border-gray-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Right Side Card -->
+    <div data-aos="fade-left" data-aos-delay="200" class="ml-0 md:ml-12 md:w-1/2">
+        <div class="timeline-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border-l-4 border-green-500 transform transition-all duration-500 hover:scale-[1.02]">
+            
+            <p data-aos="fade-up" data-aos-delay="400"
+                class="text-sm font-semibold text-green-600 dark:text-green-400">Group Leader</p>
+            
+            <h3 data-aos="fade-up" data-aos-delay="500"
+                class="text-xl font-bold text-gray-800 dark:text-white mt-2">Neourm Sakada</h3>
+            
+            <p data-aos="fade-up" data-aos-delay="600"
+                class="text-gray-600 dark:text-gray-300 mt-4">I am a web developer and group leader responsible for leading the overall website development. I designed the full layout, including the header and navigation bar. I managed and controlled the entire website to ensure consistency and performance. I also developed key sections such as the home page and contact page. Additionally, I implemented a dark and light mode feature to improve user experience.</p>
+            
+            <div data-aos="zoom-in" data-aos-delay="700" class="mt-4">
+                <img src="../asset/image_member/skd_2.jpg" alt="Code screenshot" class="rounded-lg shadow-md">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+                <!-- Item 2 SR -->
+                <div class="timeline-item flex flex-col md:flex-row items-center">
+
+    <!-- Left Side Card -->
+    <div data-aos="fade-right" data-aos-delay="200" class="mr-0 md:mr-12 md:w-1/2 flex justify-end">
+        <div class="timeline-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border-r-4 border-purple-500 transform transition-all duration-500 hover:scale-[1.02]">
+            
+            <p data-aos="fade-up" data-aos-delay="400"
+                class="text-sm font-semibold text-purple-600 dark:text-purple-400">Menu Page Developer</p>
+            
+            <h3 data-aos="fade-up" data-aos-delay="500"
+                class="text-xl font-bold text-gray-800 dark:text-white mt-2">Mon Srey roth</h3>
+            
+            <p data-aos="fade-up" data-aos-delay="600"
+                class="text-gray-600 dark:text-gray-300 mt-4">As a group member, I led the development of the menu page. I designed the layout and organized the food items clearly. I also worked on food images to make the page more attractive. I focused on creating a clean and easy-to-use design. My contribution helped improve the website's appearance.</p>
+            
+            <div data-aos="zoom-in" data-aos-delay="700" class="mt-4">
+                <img src="../asset/image_member/sr_2.jpg" alt="Code screenshot" class="rounded-lg shadow-md">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Icon on Central Line -->
+    <div class="absolute left-1/2 transform -translate-x-1/2 z-10">
+        <div data-aos="zoom-in" data-aos-delay="300"
+            class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500 text-white border-4 border-white dark:border-gray-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Empty Right Side -->
+    <div class="hidden md:block md:w-1/2 pl-12"></div>
+</div>
+
+                <!-- Item 3 RTN -->
+                <div data-aos="flip-right" class="timeline-item flex flex-col md:flex-row items-center">
+
+    <!-- Left Side Content (Desktop) -->
+    <div class="hidden md:block md:w-1/2 pr-12"></div>
+
+    <!-- Icon on Central Line -->
+    <div class="absolute left-1/2 transform -translate-x-1/2 z-10">
+        <div data-aos="zoom-in" data-aos-delay="300"
+            class="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500 text-white border-4 border-white dark:border-gray-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Right Side Card -->
+    <div data-aos="fade-left" data-aos-delay="200" class="ml-0 md:ml-12 md:w-1/2">
+        <div class="timeline-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border-l-4 border-yellow-500 transform transition-all duration-500 hover:scale-[1.02]">
+
+            <p data-aos="fade-up" data-aos-delay="400"
+                class="text-sm font-semibold text-yellow-600 dark:text-yellow-400">Services Page Developer</p>
+
+            <h3 data-aos="fade-up" data-aos-delay="500"
+                class="text-xl font-bold text-gray-800 dark:text-white mt-2">Roun Rathana</h3>
+
+            <p data-aos="fade-up" data-aos-delay="600"
+                class="text-gray-600 dark:text-gray-300 mt-4">As a group member, I helped develop the website. I led the services page and designed its layout. I made sure the content was easy to understand and well organized. I also worked on making the page responsive. My contribution helped make the website more user-friendly</p>
+
+            <div data-aos="zoom-in" data-aos-delay="700" class="mt-4">
+                <img src="../asset/image_member/rtn_2.jpg" alt="Code screenshot" class="rounded-lg shadow-md">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+                <!-- Item 4 -->
+                <div data-aos="flip-left" class="timeline-item flex flex-col md:flex-row items-center">
+
+    <!-- Left Side Card -->
+    <div data-aos="fade-right" data-aos-delay="200" class="mr-0 md:mr-12 md:w-1/2 flex justify-end">
+        <div class="timeline-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border-r-4 border-red-500 transform transition-all duration-500 hover:scale-[1.02]">
+
+            <p data-aos="fade-up" data-aos-delay="400"
+                class="text-sm font-semibold text-red-600 dark:text-red-400">Sign-in Developer</p>
+
+            <h3 data-aos="fade-up" data-aos-delay="500"
+                class="text-xl font-bold text-gray-800 dark:text-white mt-2">SamBat SamBer</h3>
+
+            <p data-aos="fade-up" data-aos-delay="600"
+                class="text-gray-600 dark:text-gray-300 mt-4">As a key member of the team, I took the lead in developing the sign-in page for our website. I was responsible for designing its overall structure while ensuring a strong focus on usability, functionality, and a clean user interface. In addition, I implemented a responsive design to guarantee smooth performance across different devices and screen sizes. Through my contribution, I was able to create a login system that is not only simple and efficient, but also intuitive and user-centered.</p>
+
+            <div data-aos="zoom-in" data-aos-delay="700" class="mt-4">
+                <img src="../asset/image_member/sb_2.jpg" alt="Code screenshot" class="rounded-lg shadow-md">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Icon on Central Line -->
+    <div class="absolute left-1/2 transform -translate-x-1/2 z-10">
+        <div data-aos="zoom-in" data-aos-delay="300"
+            class="flex items-center justify-center w-12 h-12 rounded-full bg-red-500 text-white border-4 border-white dark:border-gray-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Empty Right Side -->
+    <div class="hidden md:block md:w-1/2 pl-12"></div>
+</div>
+
+                <!-- Item 5 -->
+                <div data-aos="flip-right" class="timeline-item flex flex-col md:flex-row items-center">
+
+    <!-- Left Side Content (Desktop) -->
+    <div class="hidden md:block md:w-1/2 pr-12"></div>
+
+    <!-- Icon on Central Line -->
+    <div class="absolute left-1/2 transform -translate-x-1/2 z-10">
+        <div data-aos="zoom-in" data-aos-delay="300"
+            class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 text-white border-4 border-white dark:border-gray-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Right Side Card -->
+    <div data-aos="fade-left" data-aos-delay="200" class="ml-0 md:ml-12 md:w-1/2">
+        <div class="timeline-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 transform transition-all duration-500 hover:scale-[1.02]">
+
+            <p data-aos="fade-up" data-aos-delay="400"
+                class="text-sm font-semibold text-blue-600 dark:text-blue-400">Footer Developer</p>
+
+            <h3 data-aos="fade-up" data-aos-delay="500"
+                class="text-xl font-bold text-gray-800 dark:text-white mt-2">Lorm Chhina Vathana</h3>
+
+            <p data-aos="fade-up" data-aos-delay="600"
+                class="text-gray-600 dark:text-gray-300 mt-4">As a group member, I worked on developing the website with a focus on the footer page. I designed a clean and structured footer that improves usability and navigation. I made sure it blends well with the overall website design. I also focused on clarity and responsiveness to improve user experience. My work helped give the website a complete and polished look.</p>
+
+            <div data-aos="zoom-in" data-aos-delay="700" class="mt-4">
+                <img src="../asset/image_member/vtn_3.jpg" alt="Code screenshot" class="rounded-lg shadow-md">
+            </div>
+
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool -->
+<section class="items-center justify-center text-center py-16 px-6 bg-green-100 dark:bg-black">
+    <div class="w-full max-w-4xl text-center p-6 mx-auto">
+        <h2 class="text-5xl font-bold text-black dark:text-white mb-6">Tool and Technology</h2>
+
+        <!-- Row 1: 2 cols on mobile, 4 on tablet/desktop -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6">
+            <div class="flex flex-col items-center p-4 bg-white rounded-xl dark:bg-gray-700 shadow-lg transition transform hover:scale-105 hover:bg-green-600">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" class="w-12 h-12 mb-2">
+                <span class="text-black hover:text-white dark:text-white">HTML5</span>
+            </div>
+            <div class="flex flex-col items-center p-4 bg-white rounded-xl dark:bg-gray-700 shadow-lg transition transform hover:scale-105 hover:bg-green-600">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS" class="w-12 h-12 mb-2">
+                <span class="text-black hover:text-white dark:text-white">CSS3</span>
+            </div>
+            <div class="flex flex-col items-center p-4 bg-white rounded-xl dark:bg-gray-700 shadow-lg transition transform hover:scale-105 hover:bg-green-600">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="w-12 h-12 mb-2">
+                <span class="text-black hover:text-white dark:text-white">JavaScript</span>
+            </div>
+            <div class="flex flex-col items-center p-4 bg-white rounded-xl dark:bg-gray-700 shadow-lg transition transform hover:scale-105 hover:bg-green-600">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="TailwindCSS" class="w-12 h-12 mb-2">
+                <span class="text-black hover:text-white dark:text-white">TailwindCSS</span>
+            </div>
+        </div>
+
+        <!-- Row 2: always centered on ALL screen sizes -->
+        <div class="flex justify-center gap-6">
+            <div class="flex flex-col items-center p-4 bg-white rounded-xl dark:bg-gray-700 shadow-lg transition transform hover:scale-105 hover:bg-green-600 w-[calc(50%-12px)] sm:w-[calc(25%-12px)]">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="w-12 h-12 mb-2">
+                <span class="text-black hover:text-white dark:text-white">Node.js</span>
+            </div>
+            <div class="flex flex-col items-center p-4 bg-white rounded-xl dark:bg-gray-700 shadow-lg transition transform hover:scale-105 hover:bg-green-600 w-[calc(50%-12px)] sm:w-[calc(25%-12px)]">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" class="w-12 h-12 mb-2">
+                <span class="text-black hover:text-white dark:text-white">GitHub</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+    <footer class="bg-green-800 dark:bg-gray-900 border-t border-green-700 dark:border-gray-800 text-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-14">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+                <!-- Logo -->
+                <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
+                    <div class="w-20 h-20 rounded-2xl bg-white flex items-center justify-center mb-4 shadow-lg">
+                        <img src="../../asset/logo_malub-removebg-preview.png" alt="MALUB Logo" class="w-16 h-16 object-contain">
+                    </div>
+                    <p class="font-black text-lg text-white mb-1">MALUB</p>
+                    <p class="text-green-300 dark:text-gray-400 text-sm mb-4">Restaurant</p>
+                    <div class="flex gap-2 flex-wrap justify-center sm:justify-start">
+                        <a href="#" class="w-9 h-9 rounded-xl bg-blue-600 hover:bg-blue-500 flex items-center justify-center hover:scale-110 transition-all">
+                            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl bg-black hover:bg-gray-800 flex items-center justify-center hover:scale-110 transition-all">
+                            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl bg-sky-500 hover:bg-sky-400 flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fa-brands fa-telegram text-white text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl flex items-center justify-center hover:scale-110 transition-all" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
+                            <i class="fa-brands fa-instagram text-white text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Explore -->
+                <div>
+                    <h3 class="font-bold text-xs tracking-widest uppercase mb-5 text-green-300 dark:text-gray-400">Explore</h3>
+                    <ul class="space-y-3 text-sm text-green-100 dark:text-gray-300">
+                        <li><a href="./homePage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Home</a></li>
+                        <li><a href="./menuPage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Menu</a></li>
+                        <li><a href="./aboutPage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">About Us</a></li>
+                        <li><a href="./services.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Services</a></li>
+                        <li><a href="./contactPage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Address -->
+                <div>
+                    <h3 class="font-bold text-xs tracking-widest uppercase mb-5 text-green-300 dark:text-gray-400">Address & Contacts</h3>
+                    <p class="text-sm leading-relaxed mb-5 text-green-100 dark:text-gray-300">
+                        No. 40, Street 273,<br>Sangkat Boeung Kak I,<br>Khan Toul Kork,<br>Phnom Penh, Cambodia
+                    </p>
+                    <ul class="space-y-2 text-sm text-green-100 dark:text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 17-928-998</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 86-243-016</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 97-297-7674</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 69-298-825</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 96-673-3867</li>
+                    </ul>
+                </div>
+
+                <!-- Follow -->
+                <div>
+                    <h3 class="font-bold text-xs tracking-widest uppercase mb-5 text-green-300 dark:text-gray-400">Follow Us</h3>
+                    <div class="bg-white/10 dark:bg-gray-800 backdrop-blur rounded-2xl p-4 flex items-center gap-3 border border-white/10 dark:border-gray-700">
+                        <img src="../../asset/logo_malub-removebg-preview.png" alt="MALUB" class="w-12 h-12 rounded-xl border-2 border-green-400 flex-shrink-0 bg-white p-1">
+                        <div>
+                            <p class="font-bold text-sm text-white">MALUB Restaurant</p>
+                            <p class="text-xs text-green-300 dark:text-gray-400 mb-2">Follow us on Facebook</p>
+                            <button class="text-xs text-white bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded-full flex items-center gap-1 transition-colors font-semibold">
+                                <i class="fa-brands fa-facebook text-xs"></i> Follow
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="border-t border-green-700 dark:border-gray-800 py-5 px-6 text-center text-sm text-green-300 dark:text-gray-500">
+            © 2026 MALUB Restaurant — All Rights Reserved
+        </div>
+    </footer>
+      <script>
+        // ── Dark Mode ──
+        var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyDark(isDark);
+
+        function applyDark(dark) {
+            isDark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            }
+            var icon = dark ? '🌙' : '☀️';
+            var i1 = document.getElementById('toggleIcon');
+            var i2 = document.getElementById('toggleIconMobile');
+            if (i1) i1.textContent = icon;
+            if (i2) i2.textContent = icon;
+        }
+
+        function toggleDark() {
+            applyDark(!isDark);
+        }
+
+        // ── Mobile Menu ──
+        window.addEventListener('DOMContentLoaded', function() {
+            var btn = document.getElementById('mobileMenuButton');
+            var menu = document.getElementById('mobileMenu');
+            var isOpen = false;
+
+            if (btn && menu) {
+                btn.addEventListener('click', function() {
+                    isOpen = !isOpen;
+                    btn.classList.toggle('ham-open', isOpen);
+                    menu.classList.toggle('open', isOpen);
+                });
+            }
+
+            // Nav link animations
+            document.querySelectorAll('.nav-link').forEach(function(link, i) {
+                link.classList.add('animate-fade-in');
+                link.style.animationDelay = (i * 0.08) + 's';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (isOpen && !btn.contains(e.target) && !menu.contains(e.target)) {
+                    isOpen = false;
+                    btn.classList.remove('ham-open');
+                    menu.classList.remove('open');
+                }
+            });
+        });
+
+        // ── Category Toggle ──
+        function toggleCategory(btn, gridId) {
+            var grid = document.getElementById(gridId);
+            var extras = grid.querySelectorAll('[data-extra]');
+            var open = btn.getAttribute('data-open') === 'true';
+            var label = btn.querySelector('.label');
+            var arrow = btn.querySelector('.arrow');
+            var total = grid.querySelectorAll('.product-card').length;
+
+            for (var i = 0; i < extras.length; i++) {
+                extras[i].style.display = open ? 'none' : 'block';
+            }
+            btn.setAttribute('data-open', open ? 'false' : 'true');
+            arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+            label.textContent = open ? 'See all ' + total + ' items' : 'Show less';
+        }
+    </script>
+        <script>
+        // About us
+        (function () {
+          const cards = [
+            { name: 'Sofia Alvarez', role: 'Growth Lead', img: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=1200&q=80&auto=format&fit=crop' },
+            { name: 'Jackson Mitchel', role: 'AI Lead', img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=1200&q=80&auto=format&fit=crop' },
+            { name: 'John Doe', role: 'Product Head', img: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=1200&q=80&auto=format&fit=crop' },
+            { name: 'Armenia Sean', role: 'Social Media Head', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&q=80&auto=format&fit=crop' },
+            { name: 'Maya Patel', role: 'Design Lead', img: 'https://images.unsplash.com/photo-1541534401786-2077eed87a2d?w=1200&q=80&auto=format&fit=crop' },
+            { name: 'Liam Becker', role: 'Platform Engineer', img: 'https://images.unsplash.com/photo-1544005316-04d7f94c1d27?w=1200&q=80&auto=format&fit=crop' }
+          ];
+
+          let currentIndex = 2;
+          const prevBtn = document.getElementById('teamPrevBtn');
+          const nextBtn = document.getElementById('teamNextBtn');
+          const carouselCards = document.querySelectorAll('.carousel-card');
+
+          function updateCarousel() {
+            carouselCards.forEach((card, i) => {
+              const relativePos = i - currentIndex;
+              let transform = '';
+              let opacity = 1;
+              let filter = 'brightness(1)';
+              let zIndex = 1;
+              let ringClass = 'ring-1 ring-white/10';
+              let shadow = '';
+
+              if (relativePos === 0) {
+                transform = 'translateX(0) scale(1) rotateY(0deg)';
+                opacity = 1;
+                zIndex = 10;
+                ringClass = 'ring-2 ring-lime-300/40';
+                shadow = '0 20px 60px rgba(163,230,53,0.3)';
+              } else if (relativePos === -1) {
+                transform = 'translateX(-180px) scale(0.9) rotateY(10deg)';
+                opacity = 0.6;
+                filter = 'brightness(0.75)';
+                zIndex = 5;
+              } else if (relativePos === 1) {
+                transform = 'translateX(180px) scale(0.9) rotateY(-10deg)';
+                opacity = 0.6;
+                filter = 'brightness(0.75)';
+                zIndex = 5;
+              } else if (relativePos === -2) {
+                transform = 'translateX(-360px) scale(0.85) rotateY(20deg)';
+                opacity = 0.4;
+                filter = 'brightness(0.6)';
+                zIndex = 2;
+              } else if (relativePos === 2) {
+                transform = 'translateX(360px) scale(0.85) rotateY(-20deg)';
+                opacity = 0.4;
+                filter = 'brightness(0.6)';
+                zIndex = 2;
+              } else {
+                transform = `translateX(${relativePos * 180}px) scale(0.75) rotateY(${-relativePos * 15}deg)`;
+                opacity = 0;
+                filter = 'brightness(0.5)';
+                zIndex = 1;
+              }
+
+              card.style.transform = transform;
+              card.style.opacity = opacity;
+              card.style.filter = filter;
+              card.style.zIndex = zIndex;
+              card.style.boxShadow = shadow;
+              card.className = `carousel-card absolute w-80 h-[460px] rounded-2xl overflow-hidden ${ringClass} ${relativePos === 0 ? 'bg-lime-400/10' : ''} transition-all duration-500`;
+            });
+          }
+
+          if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+              currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+              updateCarousel();
+            });
+          }
+
+          if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+              currentIndex = (currentIndex + 1) % cards.length;
+              updateCarousel();
+            });
+          }
+
+          updateCarousel();
+        })();
+
+        // Intersection Observer to trigger animations on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2 // Trigger when 20% of the item is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add the 'visible' class to the timeline item
+                        entry.target.classList.add('visible');
+                        // Also find the card inside and make it visible
+                        const card = entry.target.querySelector('.timeline-card');
+                        if (card) {
+                            card.classList.add('visible');
+                        }
+                        // Stop observing after animation triggers
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all timeline items
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.classList.add('animate-fade-in-up'); // Add the initial hidden state
+                observer.observe(item);
+            });
+        });
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            AOS.init({ offset: 0, once: true, duration: 800 });
+        });
+    </script>
+</body>
+</html>

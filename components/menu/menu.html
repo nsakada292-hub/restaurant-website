@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cormorant Garamond', 'serif'],
+            body: ['DM Sans', 'sans-serif'],
+          },
+          colors: {
+            cream: '#faf8f4',
+            warm: '#f5ede0',
+            amber: {
+              warm: '#c8873a',
+              light: '#e8c99a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .product-card { transition: transform 0.18s ease, box-shadow 0.18s ease; }
+    .product-card:hover { transform: translateY(-3px); }
+    .arrow { transition: transform 0.3s ease; }
+    .arrow.open { transform: rotate(180deg); }
+    .product-hidden { display: none; }
+  </style>
+</head>
+<body class="bg-[#faf8f4] min-h-screen py-12 px-4">
+
+  <!-- Header -->
+  <div class="text-center mb-14">
+    <h1 class="font-display text-5xl font-semibold text-stone-800 tracking-tight">Our Menu</h1>
+    <p class="text-stone-400 font-light mt-2 text-sm tracking-wide">Fresh ingredients, crafted with care</p>
+  </div>
+
+  <!-- Menu Wrapper -->
+  <div class="max-w-3xl mx-auto space-y-5">
+
+    <!-- ── CATEGORY: Pizza ── -->
+    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+      <!-- Category Header -->
+      <div class="flex items-center gap-4 px-6 py-5 border-b border-stone-100">
+        <div class="w-11 h-11 rounded-xl bg-[#f5ede0] flex items-center justify-center text-xl flex-shrink-0">🍕</div>
+        <div>
+          <h2 class="font-display text-lg font-semibold text-stone-800">Pizza</h2>
+          <p class="text-xs text-stone-400 font-light">7 items available</p>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 px-6 pt-5 pb-1" id="pizza-grid">
+        <!-- Visible by default -->
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🧀</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Margherita</p>
+            <p class="text-xs text-stone-400 font-light truncate">Tomato, mozzarella, basil</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$9.00</p>
+          </div>
+        </div>
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍖</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Pepperoni</p>
+            <p class="text-xs text-stone-400 font-light truncate">Classic pepperoni & cheese</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$11.00</p>
+          </div>
+        </div>
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍗</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">BBQ Chicken</p>
+            <p class="text-xs text-stone-400 font-light truncate">Smoky BBQ sauce, chicken</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$12.50</p>
+          </div>
+        </div>
+        <!-- Hidden products -->
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🥦</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Veggie Delight</p>
+            <p class="text-xs text-stone-400 font-light truncate">Mixed fresh vegetables</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$10.00</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍄</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Mushroom</p>
+            <p class="text-xs text-stone-400 font-light truncate">Wild mushroom blend</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$10.50</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍍</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Hawaiian</p>
+            <p class="text-xs text-stone-400 font-light truncate">Ham, pineapple, cheese</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$11.50</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🧀</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Four Cheese</p>
+            <p class="text-xs text-stone-400 font-light truncate">Mozzarella, gouda, blue, parmesan</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$13.00</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggle Row -->
+      <div class="flex items-center gap-3 px-6 py-4">
+        <div class="flex-1 h-px bg-stone-100"></div>
+        <button onclick="toggleCategory(this, 'pizza-grid')"
+          class="flex items-center gap-1.5 text-[#c8873a] bg-[#f5ede0] border border-[#e8c99a] text-xs font-medium rounded-full px-4 py-1.5 cursor-pointer hover:bg-[#c8873a] hover:text-white hover:border-[#c8873a] transition-colors duration-150 whitespace-nowrap">
+          <span class="label">See all 7 items</span>
+          <span class="arrow text-[10px]">▼</span>
+        </button>
+        <div class="flex-1 h-px bg-stone-100"></div>
+      </div>
+    </div>
+
+
+    <!-- ── CATEGORY: Pasta ── -->
+    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+      <div class="flex items-center gap-4 px-6 py-5 border-b border-stone-100">
+        <div class="w-11 h-11 rounded-xl bg-[#f5ede0] flex items-center justify-center text-xl flex-shrink-0">🍝</div>
+        <div>
+          <h2 class="font-display text-lg font-semibold text-stone-800">Pasta</h2>
+          <p class="text-xs text-stone-400 font-light">6 items available</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 px-6 pt-5 pb-1" id="pasta-grid">
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍝</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Carbonara</p>
+            <p class="text-xs text-stone-400 font-light truncate">Egg, pancetta, pecorino</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$13.00</p>
+          </div>
+        </div>
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍅</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Bolognese</p>
+            <p class="text-xs text-stone-400 font-light truncate">Slow-cooked meat sauce</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$14.00</p>
+          </div>
+        </div>
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🌿</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Pesto Pasta</p>
+            <p class="text-xs text-stone-400 font-light truncate">Fresh basil pesto, pine nuts</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$12.00</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🦐</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Shrimp Aglio</p>
+            <p class="text-xs text-stone-400 font-light truncate">Garlic, olive oil, shrimp</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$16.00</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🧅</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Amatriciana</p>
+            <p class="text-xs text-stone-400 font-light truncate">Tomato, guanciale, onion</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$13.50</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🥩</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Lasagna</p>
+            <p class="text-xs text-stone-400 font-light truncate">Layered beef & béchamel</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$15.00</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 px-6 py-4">
+        <div class="flex-1 h-px bg-stone-100"></div>
+        <button onclick="toggleCategory(this, 'pasta-grid')"
+          class="flex items-center gap-1.5 text-[#c8873a] bg-[#f5ede0] border border-[#e8c99a] text-xs font-medium rounded-full px-4 py-1.5 cursor-pointer hover:bg-[#c8873a] hover:text-white hover:border-[#c8873a] transition-colors duration-150 whitespace-nowrap">
+          <span class="label">See all 6 items</span>
+          <span class="arrow text-[10px]">▼</span>
+        </button>
+        <div class="flex-1 h-px bg-stone-100"></div>
+      </div>
+    </div>
+
+
+    <!-- ── CATEGORY: Drinks ── -->
+    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+      <div class="flex items-center gap-4 px-6 py-5 border-b border-stone-100">
+        <div class="w-11 h-11 rounded-xl bg-[#f5ede0] flex items-center justify-center text-xl flex-shrink-0">🥤</div>
+        <div>
+          <h2 class="font-display text-lg font-semibold text-stone-800">Drinks</h2>
+          <p class="text-xs text-stone-400 font-light">5 items available</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 px-6 pt-5 pb-1" id="drinks-grid">
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍊</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Orange Juice</p>
+            <p class="text-xs text-stone-400 font-light truncate">Freshly squeezed</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$4.00</p>
+          </div>
+        </div>
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">☕</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Espresso</p>
+            <p class="text-xs text-stone-400 font-light truncate">Double shot, Italian blend</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$3.50</p>
+          </div>
+        </div>
+        <div class="product-card bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🧃</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Lemonade</p>
+            <p class="text-xs text-stone-400 font-light truncate">House-made, mint garnish</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$4.50</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🍵</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Green Tea</p>
+            <p class="text-xs text-stone-400 font-light truncate">Premium Japanese matcha</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$3.00</p>
+          </div>
+        </div>
+        <div class="product-card product-hidden bg-white border border-stone-100 rounded-xl overflow-hidden cursor-pointer hover:shadow-md">
+          <div class="w-full aspect-[4/3] bg-[#f5ede0] flex items-center justify-center text-4xl">🥛</div>
+          <div class="px-3 py-2.5">
+            <p class="font-medium text-sm text-stone-800 truncate">Milkshake</p>
+            <p class="text-xs text-stone-400 font-light truncate">Vanilla, choc, or strawberry</p>
+            <p class="text-sm font-medium text-[#c8873a] mt-1.5">$6.00</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 px-6 py-4">
+        <div class="flex-1 h-px bg-stone-100"></div>
+        <button onclick="toggleCategory(this, 'drinks-grid')"
+          class="flex items-center gap-1.5 text-[#c8873a] bg-[#f5ede0] border border-[#e8c99a] text-xs font-medium rounded-full px-4 py-1.5 cursor-pointer hover:bg-[#c8873a] hover:text-white hover:border-[#c8873a] transition-colors duration-150 whitespace-nowrap">
+          <span class="label">See all 5 items</span>
+          <span class="arrow text-[10px]">▼</span>
+        </button>
+        <div class="flex-1 h-px bg-stone-100"></div>
+      </div>
+    </div>
+
+  </div><!-- end menu wrapper -->
+
+  <script>
+    function toggleCategory(btn, gridId) {
+      const grid = document.getElementById(gridId);
+      const hiddenCards = grid.querySelectorAll('.product-hidden');
+      const alreadyOpen = btn.classList.contains('is-open');
+      const labelEl = btn.querySelector('.label');
+      const arrowEl = btn.querySelector('.arrow');
+
+      if (!alreadyOpen) {
+        hiddenCards.forEach(card => {
+          card.classList.remove('product-hidden');
+          card.dataset.wasHidden = 'true';
+        });
+        btn.classList.add('is-open');
+        arrowEl.classList.add('open');
+        labelEl.textContent = 'Show less';
+      } else {
+        grid.querySelectorAll('[data-was-hidden]').forEach(card => {
+          card.classList.add('product-hidden');
+          delete card.dataset.wasHidden;
+        });
+        btn.classList.remove('is-open');
+        arrowEl.classList.remove('open');
+        const total = grid.querySelectorAll('.product-card').length;
+        labelEl.textContent = `See all ${total} items`;
+      }
+    }
+  </script>
+
+</body>
+</html>

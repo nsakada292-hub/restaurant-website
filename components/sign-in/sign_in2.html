@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Haven - Sign In & Reviews</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #fbbf24;
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .food-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        /* Toggle Switch Styling */
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active {
+            background-color: #10b981;
+        }
+        .toggle-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(28px);
+        }
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 200px;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 50;
+        }
+        .profile-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-utensils text-orange-500 text-2xl"></i>
+                    <span class="font-display text-2xl font-bold text-gray-800">Gourmet Haven</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-orange-500 transition">Menu</a>
+                    <a href="#" class="text-gray-600 hover:text-orange-500 transition">Reservations</a>
+                    <a href="#" class="text-gray-600 hover:text-orange-500 transition">About</a>
+                    <a href="#" class="text-gray-600 hover:text-orange-500 transition">Contact</a>
+                </div>
+
+                <!-- Right Side: Toggle + Sign In/Profile -->
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle Switch -->
+                    <div class="toggle-switch" id="theme-toggle" onclick="toggleTheme()">
+                        <div class="toggle-slider">
+                            <i class="fas fa-sun text-yellow-500 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Sign In Button (shown when logged out) -->
+                    <button id="signin-btn" onclick="scrollToSignIn()" 
+                        class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md">
+                        Sign In
+                    </button>
+
+                    <!-- Profile Button (shown when logged in - initially hidden) -->
+                    <div id="profile-section" class="hidden relative">
+                        <button onclick="toggleProfileDropdown()" 
+                            class="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full transition-all duration-300 shadow-md">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-green-600 font-bold text-sm" id="profile-avatar">
+                                JD
+                            </div>
+                            <span class="font-medium text-sm hidden lg:inline" id="profile-name">John</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        
+                        <!-- Profile Dropdown Menu -->
+                        <div id="profile-dropdown" class="profile-dropdown">
+                            <div class="p-4 border-b border-gray-100">
+                                <p class="font-semibold text-gray-900" id="dropdown-name">John Doe</p>
+                                <p class="text-sm text-gray-500" id="dropdown-email">john@example.com</p>
+                            </div>
+                            <div class="p-2">
+                                <a href="#" onclick="showDashboard()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                                    <i class="fas fa-user mr-2 text-gray-400"></i>My Account
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                                    <i class="fas fa-star mr-2 text-gray-400"></i>My Reviews
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                                    <i class="fas fa-calendar mr-2 text-gray-400"></i>Reservations
+                                </a>
+                                <div class="border-t border-gray-100 mt-2 pt-2">
+                                    <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="pt-16 min-h-screen flex flex-col">
+        
+        <!-- Hero Section (Sign In) -->
+        <section id="signin-section" class="relative flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 gradient-bg food-pattern">
+            <div class="absolute inset-0 bg-black/40"></div>
+            
+            <div class="relative z-10 w-full max-w-md">
+                <div class="glass-effect rounded-2xl shadow-2xl p-8 transform transition-all duration-500 hover:scale-[1.02]">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-500 rounded-full mb-4 shadow-lg">
+                            <i class="fas fa-user text-white text-2xl"></i>
+                        </div>
+                        <h2 class="font-display text-3xl font-bold text-gray-900">Welcome Back</h2>
+                        <p class="text-gray-600 mt-2">Sign in to share your dining experience</p>
+                    </div>
+
+                    <form id="signin-form" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <div class="relative">
+                                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="fullname" required 
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all outline-none"
+                                    placeholder="John Doe">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <div class="relative">
+                                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="email" id="email" required 
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all outline-none"
+                                    placeholder="john@example.com">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="password" id="password" required 
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all outline-none"
+                                    placeholder="••••••••">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Visit Date</label>
+                            <div class="relative">
+                                <i class="fas fa-calendar absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="date" id="visit-date" required 
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all outline-none">
+                            </div>
+                        </div>
+
+                        <button type="submit" 
+                            class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold py-3 px-4 rounded-lg hover:from-orange-600 hover:to-red-600 transform hover:-translate-y-1 transition-all duration-200 shadow-lg">
+                            Create Account & Continue
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600">Already have an account? <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section (Hidden initially) -->
+        <section id="dashboard-section" class="hidden flex-grow bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <!-- User Header -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 slide-in">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                                <span id="user-initials">JD</span>
+                            </div>
+                            <div>
+                                <h2 class="font-display text-2xl font-bold text-gray-900" id="dashboard-name">Welcome!</h2>
+                                <p class="text-gray-600" id="dashboard-email">user@example.com</p>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">
+                                    <i class="fas fa-check-circle mr-1"></i> Member since <span id="member-since">Today</span>
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="logout()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Rating & Comment Section -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Rating Card -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6 slide-in" style="animation-delay: 0.1s">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="font-display text-xl font-bold text-gray-900">
+                                    <i class="fas fa-star text-yellow-400 mr-2"></i>Rate Your Experience
+                                </h3>
+                                <span class="text-sm text-gray-500" id="current-date"></span>
+                            </div>
+
+                            <form id="rating-form" class="space-y-6">
+                                <div class="flex flex-col items-center py-4">
+                                    <p class="text-gray-600 mb-4">How was your visit on <span id="visit-date-display" class="font-semibold text-orange-600"></span>?</p>
+                                    
+                                    <div class="star-rating flex flex-row-reverse gap-2 text-3xl">
+                                        <input type="radio" id="star5" name="rating" value="5" />
+                                        <label for="star5" class="text-gray-300 hover:text-yellow-400 transition"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label for="star4" class="text-gray-300 hover:text-yellow-400 transition"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label for="star3" class="text-gray-300 hover:text-yellow-400 transition"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label for="star2" class="text-gray-300 hover:text-yellow-400 transition"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label for="star1" class="text-gray-300 hover:text-yellow-400 transition"><i class="fas fa-star"></i></label>
+                                    </div>
+                                    <p id="rating-text" class="mt-2 text-sm font-medium text-gray-600">Select a rating</p>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Share your experience</label>
+                                    <textarea id="comment-text" rows="4" 
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all outline-none resize-none"
+                                        placeholder="Tell us about your meal, service, and atmosphere..."></textarea>
+                                    <div class="flex justify-between mt-2">
+                                        <span class="text-xs text-gray-500">Min. 10 characters</span>
+                                        <span class="text-xs text-gray-500" id="char-count">0/500</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4">
+                                    <button type="submit" 
+                                        class="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold py-3 px-6 rounded-lg hover:from-orange-600 hover:to-red-600 transform hover:-translate-y-1 transition-all duration-200 shadow-lg">
+                                        <i class="fas fa-paper-plane mr-2"></i>Submit Review
+                                    </button>
+                                    <button type="button" onclick="clearForm()" 
+                                        class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                                        Clear
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Recent Reviews -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6 slide-in" style="animation-delay: 0.2s">
+                            <h3 class="font-display text-xl font-bold text-gray-900 mb-6">
+                                <i class="fas fa-history text-orange-500 mr-2"></i>Your Reviews
+                            </h3>
+                            <div id="reviews-container" class="space-y-4">
+                                <div class="text-center py-8 text-gray-500">
+                                    <i class="fas fa-comment-slash text-4xl mb-3 opacity-50"></i>
+                                    <p>No reviews yet. Share your first experience!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Stats Card -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6 slide-in" style="animation-delay: 0.3s">
+                            <h3 class="font-display text-lg font-bold text-gray-900 mb-4">Your Stats</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                                    <span class="text-gray-700"><i class="fas fa-star text-yellow-400 mr-2"></i>Average Rating</span>
+                                    <span class="font-bold text-orange-600 text-lg" id="avg-rating">-</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                    <span class="text-gray-700"><i class="fas fa-comment text-blue-400 mr-2"></i>Total Reviews</span>
+                                    <span class="font-bold text-blue-600 text-lg" id="total-reviews">0</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                    <span class="text-gray-700"><i class="fas fa-calendar-check text-green-400 mr-2"></i>Visits</span>
+                                    <span class="font-bold text-green-600 text-lg">1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl shadow-lg p-6 text-white slide-in" style="animation-delay: 0.4s">
+                            <h3 class="font-display text-lg font-bold mb-4">Quick Actions</h3>
+                            <div class="space-y-3">
+                                <button class="w-full py-2 px-4 bg-white/20 rounded-lg hover:bg-white/30 transition text-left">
+                                    <i class="fas fa-utensils mr-2"></i>Book a Table
+                                </button>
+                                <button class="w-full py-2 px-4 bg-white/20 rounded-lg hover:bg-white/30 transition text-left">
+                                    <i class="fas fa-gift mr-2"></i>View Offers
+                                </button>
+                                <button class="w-full py-2 px-4 bg-white/20 rounded-lg hover:bg-white/30 transition text-left">
+                                    <i class="fas fa-share-alt mr-2"></i>Invite Friends
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <div class="bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3">
+            <i id="toast-icon" class="fas fa-check-circle text-green-400"></i>
+            <span id="toast-message">Success!</span>
+        </div>
+    </div>
+
+    <script>
+        // User data storage (simulated)
+        let currentUser = null;
+        let userReviews = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
+            document.getElementById('visit-date').valueAsDate = new Date();
+            
+            // Update current date display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', options);
+
+            // Star rating interaction
+            const stars = document.querySelectorAll('.star-rating input');
+            const ratingText = document.getElementById('rating-text');
+            const ratingLabels = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+
+            stars.forEach(star => {
+                star.addEventListener('change', function() {
+                    const rating = parseInt(this.value);
+                    ratingText.textContent = ratingLabels[rating - 1];
+                    ratingText.className = 'mt-2 text-sm font-medium text-orange-600';
+                });
+            });
+
+            // Character count
+            const commentText = document.getElementById('comment-text');
+            commentText.addEventListener('input', function() {
+                const count = this.value.length;
+                document.getElementById('char-count').textContent = `${count}/500`;
+                if (count > 500) {
+                    this.value = this.value.substring(0, 500);
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const profileSection = document.getElementById('profile-section');
+                const dropdown = document.getElementById('profile-dropdown');
+                if (!profileSection.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            // Form submissions
+            document.getElementById('signin-form').addEventListener('submit', handleSignIn);
+            document.getElementById('rating-form').addEventListener('submit', handleReviewSubmit);
+        });
+
+        // Toggle theme function
+        function toggleTheme() {
+            const toggle = document.getElementById('theme-toggle');
+            const icon = toggle.querySelector('i');
+            
+            toggle.classList.toggle('active');
+            if (toggle.classList.contains('active')) {
+                icon.className = 'fas fa-moon text-blue-600 text-xs';
+                document.body.classList.add('bg-gray-900');
+                document.body.classList.remove('bg-gray-50');
+            } else {
+                icon.className = 'fas fa-sun text-yellow-500 text-xs';
+                document.body.classList.remove('bg-gray-900');
+                document.body.classList.add('bg-gray-50');
+            }
+        }
+
+        // Scroll to sign in section
+        function scrollToSignIn() {
+            document.getElementById('signin-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Toggle profile dropdown
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById('profile-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('profile-dropdown').classList.remove('show');
+            document.getElementById('signin-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('dashboard-section').classList.add('fade-in');
+        }
+
+        function handleSignIn(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const visitDate = document.getElementById('visit-date').value;
+
+            // Create user object
+            currentUser = {
+                name: fullname,
+                email: email,
+                visitDate: visitDate,
+                joinDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            };
+
+            // Show success message
+            showToast('Account created successfully!', 'success');
+
+            // Update navigation to show profile instead of sign in
+            updateNavigationForLoggedInUser();
+
+            // Transition to dashboard
+            setTimeout(() => {
+                document.getElementById('signin-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                document.getElementById('dashboard-section').classList.add('fade-in');
+                
+                // Update dashboard info
+                updateDashboard();
+            }, 800);
+        }
+
+        function updateNavigationForLoggedInUser() {
+            // Hide sign in button
+            document.getElementById('signin-btn').classList.add('hidden');
+            
+            // Show profile section
+            const profileSection = document.getElementById('profile-section');
+            profileSection.classList.remove('hidden');
+            
+            // Update profile info
+            const initials = currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            const firstName = currentUser.name.split(' ')[0];
+            
+            document.getElementById('profile-avatar').textContent = initials;
+            document.getElementById('profile-name').textContent = firstName;
+            document.getElementById('dropdown-name').textContent = currentUser.name;
+            document.getElementById('dropdown-email').textContent = currentUser.email;
+        }
+
+        function updateDashboard() {
+            // Update user info
+            document.getElementById('dashboard-name').textContent = `Welcome, ${currentUser.name.split(' ')[0]}!`;
+            document.getElementById('dashboard-email').textContent = currentUser.email;
+            document.getElementById('member-since').textContent = currentUser.joinDate;
+            document.getElementById('user-initials').textContent = currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('visit-date-display').textContent = new Date(currentUser.visitDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const comment = document.getElementById('comment-text').value;
+
+            if (!rating) {
+                showToast('Please select a rating', 'error');
+                return;
+            }
+
+            if (comment.length < 10) {
+                showToast('Please write at least 10 characters', 'error');
+                return;
+            }
+
+            // Create review object
+            const review = {
+                id: Date.now(),
+                rating: parseInt(rating.value),
+                comment: comment,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                visitDate: currentUser.visitDate
+            };
+
+            // Add to reviews
+            userReviews.unshift(review);
+            
+            // Update UI
+            displayReviews();
+            updateStats();
+            clearForm();
+            
+            showToast('Review submitted successfully!', 'success');
+        }
+
+        function displayReviews() {
+            const container = document.getElementById('reviews-container');
+            
+            if (userReviews.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-comment-slash text-4xl mb-3 opacity-50"></i>
+                        <p>No reviews yet. Share your first experience!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = userReviews.map(review => `
+                <div class="border-l-4 border-orange-500 bg-gray-50 rounded-r-lg p-4 transition-all hover:shadow-md">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center space-x-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}
+                                ${Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('')}
+                            </div>
+                            <span class="text-sm text-gray-500">• Visit: ${new Date(review.visitDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                        </div>
+                        <span class="text-xs text-gray-400">${review.date}</span>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed">${review.comment}</p>
+                    <div class="mt-3 flex items-center space-x-4 text-sm">
+                        <button class="text-gray-500 hover:text-orange-500 transition"><i class="far fa-thumbs-up mr-1"></i> Helpful</button>
+                        <button class="text-gray-500 hover:text-red-500 transition" onclick="deleteReview(${review.id})"><i class="far fa-trash-alt mr-1"></i> Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = userReviews.length;
+            const avg = total > 0 ? (userReviews.reduce((sum, r) => sum + r.rating, 0) / total).toFixed(1) : '-';
+            
+            document.getElementById('total-reviews').textContent = total;
+            document.getElementById('avg-rating').textContent = avg;
+        }
+
+        function deleteReview(id) {
+            userReviews = userReviews.filter(r => r.id !== id);
+            displayReviews();
+            updateStats();
+            showToast('Review deleted', 'success');
+        }
+
+        function clearForm() {
+            document.getElementById('rating-form').reset();
+            document.getElementById('rating-text').textContent = 'Select a rating';
+            document.getElementById('rating-text').className = 'mt-2 text-sm font-medium text-gray-600';
+            document.getElementById('char-count').textContent = '0/500';
+        }
+
+        function logout() {
+            currentUser = null;
+            userReviews = [];
+            
+            // Hide profile section and show sign in button
+            document.getElementById('profile-section').classList.add('hidden');
+            document.getElementById('profile-dropdown').classList.remove('show');
+            document.getElementById('signin-btn').classList.remove('hidden');
+            
+            // Hide dashboard and show sign in section
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('signin-section').classList.remove('hidden');
+            document.getElementById('signin-form').reset();
+            
+            showToast('Signed out successfully', 'success');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toast-icon');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle text-green-400' : 'fas fa-exclamation-circle text-red-400';
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

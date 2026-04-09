@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MALUB Restaurant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #14532d; --accent: #ffffff; }
+
+        /* Dark mode smooth transition */
+        *, *::before, *::after { transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease; }
+        img, svg, button { transition: none !important; }
+
+        /* Navbar */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeInDown 0.4s ease-out forwards; }
+        .nav-link { position: relative; overflow: hidden; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.3s ease-out; }
+        .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+        .mobile-menu { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+
+        /* Hero */
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
+        .float-shoe { animation: float 3s ease-in-out infinite; }
+
+        /* Cards */
+        .product-card { transition: transform 0.18s ease, box-shadow 0.18s ease !important; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
+        .dark .product-card:hover { box-shadow: 0 12px 28px rgba(0,0,0,0.4); }
+        .arrow { display: inline-block; transition: transform 0.3s ease; }
+
+        /* Dark mode toggle button */
+        .toggle-track { width: 52px; height: 28px; background: #d1d5db; border-radius: 9999px; position: relative; cursor: pointer; transition: background 0.3s ease !important; }
+        .dark .toggle-track { background: #16a34a; }
+        .toggle-thumb { width: 22px; height: 22px; background: white; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: transform 0.3s ease !important; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+        .dark .toggle-thumb { transform: translateX(24px); }
+        .toggle-icon { font-size: 12px; line-height: 1; }
+
+        /* Hamburger animation */
+        .ham-line { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease !important; }
+        .ham-open .ham-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .ham-open .ham-line:nth-child(2) { opacity: 0; }
+        .ham-open .ham-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* Mobile menu slide */
+        #mobileMenu { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1) !important; }
+        #mobileMenu.open { max-height: 500px; }
+
+        /* Section card hover */
+        .category-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+        .category-card:hover { transform: translateY(-2px); }
+
+        /* Scrollbar dark */
+        .dark ::-webkit-scrollbar-track { background: #1f2937; }
+        .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 transition-colors duration-300 loading">
+
+    <!-- ── NAVBAR ── -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-green-200 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="text-2xl font-black text-green-600 dark:text-green-400 tracking-tight group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors">MALUB</span>
+                <span class="hidden sm:inline text-xs font-medium text-gray-400 dark:text-gray-500 tracking-widest uppercase mt-1">Restaurant</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="./homePage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Home</a>
+                <a href="./menuPage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Menu</a>
+                <a href="./aboutPage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">About Us</a>
+                <a href="./services.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Services</a>
+                <a href="./contactPage.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">Contact</a>
+            </div>
+
+            <!-- Desktop Right -->
+            <div class="hidden md:flex items-center gap-3">
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" aria-label="Toggle dark mode" onclick="toggleDark()">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <span class="toggle-icon" id="toggleIcon">☀️</span>
+                        </div>
+                    </div>
+                </button>
+                <a href="./sign_in.html" class="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors shadow-sm">Sign In</a>
+            </div>
+
+            <!-- Mobile Right: toggle + hamburger -->
+            <div class="flex md:hidden items-center gap-3">
+                <button aria-label="Toggle dark mode" onclick="toggleDark()">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <span class="toggle-icon" id="toggleIconMobile">☀️</span>
+                        </div>
+                    </div>
+                </button>
+                <button id="mobileMenuButton" class="flex flex-col gap-1.5 p-1.5 text-gray-700 dark:text-gray-200 focus:outline-none" aria-label="Open menu">
+                    <span class="ham-line"></span>
+                    <span class="ham-line"></span>
+                    <span class="ham-line"></span>
+                </button>
+            </div>
+
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 py-3 space-y-1">
+                <a href="./homePage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">🏠 Home</a>
+                <a href="./menuPage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">🍽️ Menu</a>
+                <a href="./aboutPage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">👨‍🍳 About Us</a>
+                <a href="./services.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">🛎️ Services</a>
+                <a href="./contactPage.html" class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-xl transition-colors">📞 Contact</a>
+                <div class="pt-2 pb-1">
+                    <a href="./sign_in.html" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-3 rounded-xl transition-colors">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── HERO SECTION ── -->
+    <section class="relative min-h-screen overflow-hidden bg-green-100 dark:bg-black transition-colors duration-300 pt-16">
+        <!-- Blobs -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-green-400 dark:bg-green-700 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="absolute top-40 left-1/3 w-96 h-96 bg-yellow-300 dark:bg-yellow-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-15 animate-pulse" style="animation-delay:2s"></div>
+            <div class="absolute bottom-20 -left-20 w-72 h-72 bg-emerald-400 dark:bg-emerald-700 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 animate-pulse" style="animation-delay:1s"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-16 sm:py-20 flex flex-col lg:flex-row items-center justify-between min-h-screen gap-12">
+            <!-- Text -->
+            <div class="lg:w-1/2 text-center lg:text-left space-y-7" data-aos="fade-up-right">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-none">
+                    <span class="block text-gray-900 dark:text-white">FOOD IS</span>
+                    <span class="block text-green-600 dark:text-green-400 italic" style="font-family:'Cormorant Garamond',serif">ART</span>
+                    <span class="block text-gray-900 dark:text-white text-4xl sm:text-5xl lg:text-6xl">YOU CAN TASTE</span>
+                </h1>
+                <p class="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    Welcome to MALUB Restaurant — where we serve
+                    <span class="text-yellow-600 dark:text-yellow-400 font-bold">delicious food, quality service, and a cozy place</span>
+                    to enjoy every meal.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                    <a href="./services.html" class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white rounded-full font-bold text-base shadow-lg hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-200">
+                        Reserve a Table
+                    </a>
+                    <a href="./menuPage.html" class="inline-flex items-center justify-center gap-2 px-7 py-4 border-2 border-green-600 dark:border-green-400 text-green-700 dark:text-green-300 bg-transparent hover:bg-green-600 hover:text-white dark:hover:bg-green-400 dark:hover:text-gray-900 rounded-full font-bold text-base transform hover:scale-105 transition-all duration-200">
+                        Explore Menu
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image Card -->
+            <div class="lg:w-1/2 relative w-full max-w-sm sm:max-w-md mx-auto" data-aos="fade-up-left">
+                <div class="float-shoe relative z-10 bg-gradient-to-br from-green-400 to-emerald-600 p-1.5 rounded-3xl transform rotate-6 hover:rotate-0 transition-all duration-500 shadow-2xl shadow-green-500/30">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-7">
+                        <img src="../asset/header_food.gif" alt="Khmer Food" class="w-full h-auto object-contain rounded-xl">
+                    </div>
+                </div>
+                <div class="absolute -bottom-4 -left-2 sm:-left-6 bg-yellow-400 dark:bg-yellow-500 text-gray-900 px-4 sm:px-5 py-2 sm:py-3 rounded-2xl font-black text-base sm:text-lg shadow-xl transform rotate-6 hover:rotate-0 transition-all duration-300 z-20">
+                    🍜 Khmer Food
+                </div>
+                <div class="absolute -top-4 -right-2 sm:-right-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-white px-3 sm:px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm shadow-xl transform -rotate-6 hover:rotate-0 transition-all duration-300 z-20 flex items-center gap-1">
+                    🌟 Good Services
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<!-- Carousel -->
+    <section class="bg-green-100 dark:bg-gray-950 py-20 px-4 transition-colors duration-300">
+        <div class="max-w-2xl mx-auto">
+
+    <div id="default-carousel" class="relative rounded-lg overflow-hidden shadow-lg" data-carousel="static">
+        <!-- Carousel wrapper -->
+        <div class="relative h-80 md:h-96" data-carousel-inner>
+            <!-- Item 1 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://i.pinimg.com/736x/22/8f/28/228f28f6a88c2232fc7136f105135bb4.jpg"
+                    class="object-cover w-full h-full" alt="Slide 1">
+                <!-- <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-semibold text-white md:text-2xl dark:text-gray-800"></span> -->
+            </div>
+            <!-- Item 2 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://i.pinimg.com/1200x/c1/48/fe/c148fe354571c90b73a71d079d5ce30f.jpg"
+                    class="object-cover w-full h-full" alt="Slide 2">
+            </div>
+            <!-- Item 3 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="./asset/image_member/photo_2026-04-09_07-39-14.jpg"
+                    class="object-cover w-full h-full" alt="Slide 3">
+            </div>
+        </div>
+        <!-- Slider indicators -->
+        <div class="flex absolute bottom-5 left-1/2 z-30 -translate-x-1/2 space-x-2" data-carousel-indicators>
+            <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none focus:bg-gray-400 transition"></button>
+            <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none focus:bg-gray-400 transition"></button>
+            <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none focus:bg-gray-400 transition"></button>
+        </div>
+        <!-- Slider controls -->
+        <button type="button"
+            class="flex absolute top-1/2 left-3 z-40 items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition"
+            data-carousel-prev>
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button type="button"
+            class="flex absolute top-1/2 right-3 z-40 items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition"
+            data-carousel-next>
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+    </div>
+
+    <p class="text-2xl mt-5 text-center text-blue-700 dark:text-gray-300">
+        Why Choose MALUB Restaurant?
+    </p><br>
+    <p class="mt-5 text-center text-gray-700 dark:text-gray-300">
+        MALUB Restaurant is a perfect place for anyone looking for a comfortable
+        and enjoyable dining experience. The restaurant is known for its good service,
+        where staff always treat customers with care and attention. The food is clean,
+        fresh, and prepared with high quality ingredients, making every dish safe and
+        delicious. The friendly chefs not only cook well but also create a warm and welcoming
+        atmosphere. Choosing MALUB means choosing great taste, cleanliness, and a place where
+        you feel truly valued.
+    </p>
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+
+</div>
+    </section>
+
+    <!-- ── MENU SECTION ── -->
+    <section class="bg-green-100 dark:bg-gray-950 py-20 px-4 transition-colors duration-300">
+        <div class="text-center mb-16" data-aos="zoom-in-down">
+            <span class="inline-block bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs font-bold px-4 py-2 rounded-full border border-green-200 dark:border-green-700 mb-4 tracking-widest uppercase">What We Serve</span>
+            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white tracking-tight">Our <span class="text-green-600 dark:text-green-400 italic" style="font-family:'Cormorant Garamond',serif">Menu</span></h1>
+            <p class="text-gray-400 dark:text-gray-500 font-light mt-3 text-sm tracking-wide">Fresh ingredients, crafted with care</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto space-y-6">
+
+            <!-- FOOD -->
+            <div class="category-card bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm dark:shadow-none" data-aos="fade-right" data-aos-once="true" data-aos-offset="0">
+                <div class="flex items-center gap-4 px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-gray-800/80 dark:to-gray-800/50">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">🥘</div>
+                    <div class="flex flex-col" style="gap:2px">
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-white" style="font-family:'Cormorant Garamond',serif;line-height:1.2;margin:0;">Food</h2>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 font-medium" style="line-height:1.2;margin:0;">9 items available</p>
+                    </div>
+                    <div class="ml-auto">
+                        <span class="bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-300 text-xs font-bold px-3 py-1 rounded-full">Main</span>
+                    </div>
+                </div>
+                <div id="pizza-grid" class="grid gap-4 p-6" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/1200x/cf/14/38/cf1438a6009939b9c2c87a4794a191c9.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">អាម៉ុកសាច់ត្រី</p><p class="text-sm font-bold text-orange-500 mt-1">$7.50</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/736x/6d/43/82/6d4382495c930a0fed1ad94fa5391eb8.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">ប្រហុកអាំងជ្រុញ</p><p class="text-sm font-bold text-orange-500 mt-1">$8.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/1200x/7d/85/55/7d8555b48a078b81d8c220574be5d78e.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">នំបញ្ចុកសម្លប្រហើរ</p><p class="text-sm font-bold text-orange-500 mt-1">$6.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/736x/44/02/c5/4402c5eb72f04058f7d383244c99899c.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Pasta គ្រឿងសមុទ្រ</p><p class="text-sm font-bold text-orange-500 mt-1">$9.50</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/2b/67/ad/2b67ad0c4b024d10cda5a5941848dd68.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">ត្រីបំពង់ទឹកត្រីផ្អែម</p><p class="text-sm font-bold text-orange-500 mt-1">$9.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/d5/d3/34/d5d334219d673ce92d988dab4516958b.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Steak សាច់គោ</p><p class="text-sm font-bold text-orange-500 mt-1">$15.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/5d/73/19/5d731959f570b4623ac8801ad7bb497b.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">តុងយុាំបង្កង</p><p class="text-sm font-bold text-orange-500 mt-1">$10.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/f6/9d/db/f69ddb7d89b3a70313ef7db21c871b34.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">ម្ជូរគ្រឿងពោះគោ</p><p class="text-sm font-bold text-orange-500 mt-1">$7.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/f0/81/3d/f0813d77d87d231f59654e7152c7f884.jpg" alt="food" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">មាន់ដុតកូកា</p><p class="text-sm font-bold text-orange-500 mt-1">$12.00</p></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 px-6 pb-5">
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                    <button onclick="toggleCategory(this, 'pizza-grid')" class="flex items-center gap-2 text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-800 text-xs font-bold rounded-full px-5 py-2 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all duration-200 whitespace-nowrap cursor-pointer">
+                        <span class="label">See all 9 items</span><span class="arrow text-xs">▼</span>
+                    </button>
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                </div>
+            </div>
+
+            <!-- DRINK -->
+            <div class="category-card bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm dark:shadow-none" data-aos="fade-left" data-aos-once="true" data-aos-offset="0">
+                <div class="flex items-center gap-4 px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800/80 dark:to-gray-800/50">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">🍹</div>
+                    <div class="flex flex-col" style="gap:2px">
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-white" style="font-family:'Cormorant Garamond',serif;line-height:1.2;margin:0;">Drink</h2>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 font-medium" style="line-height:1.2;margin:0;">12 items available</p>
+                    </div>
+                    <div class="ml-auto">
+                        <span class="bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 text-xs font-bold px-3 py-1 rounded-full">Beverage</span>
+                    </div>
+                </div>
+                <div id="pasta-grid" class="grid gap-4 p-6" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/736x/9e/3d/17/9e3d17c2834a10252be3e21dda6d7b21.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Passion fruit iced tea</p><p class="text-sm font-bold text-blue-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/736x/f5/16/01/f5160188df834c429c1f4520d7b8aac9.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Strawberries & Cream Frappuccino</p><p class="text-sm font-bold text-blue-500 mt-1">$4.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/1200x/91/f6/21/91f6215417e9fd1c24703b8b8a4cc1d9.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Iced Matcha Latte</p><p class="text-sm font-bold text-blue-500 mt-1">$3.50</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/1200x/dc/29/eb/dc29ebaddf765f249e2050dd849bfadf.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Lemon iced tea</p><p class="text-sm font-bold text-blue-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/cb/48/db/cb48db04009801523739569e0f33cfc3.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Ice Americano</p><p class="text-sm font-bold text-blue-500 mt-1">$4.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/70/22/c0/7022c089c54a2b079c4000dde2b04200.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Sugarcane juice</p><p class="text-sm font-bold text-blue-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/dc/5e/87/dc5e8715eef8a7ea7c6776a820c50082.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Blueberry yogurt</p><p class="text-sm font-bold text-blue-500 mt-1">$3.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/9d/e8/f0/9de8f042c9e11c35939db2398d72bc45.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Watermelon Slushie</p><p class="text-sm font-bold text-blue-500 mt-1">$2.50</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/d9/77/4c/d9774cc3335eec3cf0878383a39b4e95.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Tropical Pineapple Mocktail</p><p class="text-sm font-bold text-blue-500 mt-1">$3.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/5f/b2/b7/5fb2b752398f7319f1df8a8ab4335573.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Coca-Cola</p><p class="text-sm font-bold text-blue-500 mt-1">$1.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/a6/6a/66/a66a663865787066e6f9058281de6333.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Coconut water</p><p class="text-sm font-bold text-blue-500 mt-1">$1.50</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/1d/cf/72/1dcf72fca6d5a4f44cc8fa3501bcd575.jpg" alt="drink" class="w-full aspect-video object-contain bg-blue-50 dark:bg-gray-700"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">Brown Sugar</p><p class="text-sm font-bold text-blue-500 mt-1">$3.00</p></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 px-6 pb-5">
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                    <button onclick="toggleCategory(this, 'pasta-grid')" class="flex items-center gap-2 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-xs font-bold rounded-full px-5 py-2 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200 whitespace-nowrap cursor-pointer">
+                        <span class="label">See all 12 items</span><span class="arrow text-xs">▼</span>
+                    </button>
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                </div>
+            </div>
+
+            <!-- DESSERT -->
+            <div class="category-card bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm dark:shadow-none" data-aos="fade-right" data-aos-once="true" data-aos-offset="0">
+                <div class="flex items-center gap-4 px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-pink-50 to-rose-50 dark:from-gray-800/80 dark:to-gray-800/50">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">🍰</div>
+                    <div class="flex flex-col" style="gap:2px">
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-white" style="font-family:'Cormorant Garamond',serif;line-height:1.2;margin:0;">Dessert</h2>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 font-medium" style="line-height:1.2;margin:0;">12 items available</p>
+                    </div>
+                    <div class="ml-auto">
+                        <span class="bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-300 text-xs font-bold px-3 py-1 rounded-full">Sweet</span>
+                    </div>
+                </div>
+                <div id="drinks-grid" class="grid gap-4 p-6" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/736x/64/7f/7c/647f7c5d33f70cc11af906c6c6990397.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">បង្អៃមបបរត្នោត</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/736x/9f/28/2d/9f282d237e767294256643edd4f8cf52.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">បង្អៃមចេកខ្ទិះ</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/1200x/63/71/92/63719242cc9ea621493a7a7f094c4678.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">សង្យាបាយដំណើបស្វាយ</p><p class="text-sm font-bold text-pink-500 mt-1">$4.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://i.pinimg.com/1200x/48/e4/3c/48e43c217280958dd86b94a04e82437e.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">ការ៉េមដូង</p><p class="text-sm font-bold text-pink-500 mt-1">$4.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/ce/f6/73/cef6735bebc0ea2bc7c92f79d241f3d8.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">បង្អៃមលតម្សៅអង្ករ</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/66/2c/68/662c68b8ad6ebaffd815f6849aab3c68.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">នំ Cake</p><p class="text-sm font-bold text-pink-500 mt-1">$3.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/3a/31/96/3a319645ac3108da68d2165354e7812a.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">បង្អៃមគ្រាប់ទទឹម</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/0b/3d/ec/0b3dec16069b2df301ebe7e30db79507.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">ទឹកកកឈូស</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/37/83/93/3783930145a9d3a9c530542cb1d35548.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">នំអាកោត្នោត</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/1200x/7d/7d/ed/7d7dedd9a7d1d23e87984628518d6e5e.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">នំផ្លៃអាយ</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/05/08/9f/05089f90e8df44b4c0734a007dfa58a7.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">ចេកអាំងខ្មៃរ</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                    <div class="product-card bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden cursor-pointer" style="display:none" data-extra>
+                        <img src="https://i.pinimg.com/736x/9d/38/df/9d38dffb98fc1021cd58c6d16c31816e.jpg" alt="dessert" class="w-full aspect-video object-cover"/>
+                        <div class="px-4 py-3"><p class="font-semibold text-sm text-gray-800 dark:text-gray-100">នំចាក់ចុល</p><p class="text-sm font-bold text-pink-500 mt-1">$2.00</p></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 px-6 pb-5">
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                    <button onclick="toggleCategory(this, 'drinks-grid')" class="flex items-center gap-2 text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/30 border border-pink-200 dark:border-pink-800 text-xs font-bold rounded-full px-5 py-2 hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all duration-200 whitespace-nowrap cursor-pointer">
+                        <span class="label">See all 12 items</span><span class="arrow text-xs">▼</span>
+                    </button>
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="bg-green-800 dark:bg-gray-900 border-t border-green-700 dark:border-gray-800 text-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-14">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+                <!-- Logo -->
+                <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
+                    <div class="w-20 h-20 rounded-2xl bg-white flex items-center justify-center mb-4 shadow-lg">
+                        <img src="../../asset/logo_malub-removebg-preview.png" alt="MALUB Logo" class="w-16 h-16 object-contain">
+                    </div>
+                    <p class="font-black text-lg text-white mb-1">MALUB</p>
+                    <p class="text-green-300 dark:text-gray-400 text-sm mb-4">Restaurant</p>
+                    <div class="flex gap-2 flex-wrap justify-center sm:justify-start">
+                        <a href="#" class="w-9 h-9 rounded-xl bg-blue-600 hover:bg-blue-500 flex items-center justify-center hover:scale-110 transition-all">
+                            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl bg-black hover:bg-gray-800 flex items-center justify-center hover:scale-110 transition-all">
+                            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl bg-sky-500 hover:bg-sky-400 flex items-center justify-center hover:scale-110 transition-all">
+                            <i class="fa-brands fa-telegram text-white text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl flex items-center justify-center hover:scale-110 transition-all" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
+                            <i class="fa-brands fa-instagram text-white text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Explore -->
+                <div>
+                    <h3 class="font-bold text-xs tracking-widest uppercase mb-5 text-green-300 dark:text-gray-400">Explore</h3>
+                    <ul class="space-y-3 text-sm text-green-100 dark:text-gray-300">
+                        <li><a href="./homePage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Home</a></li>
+                        <li><a href="./menuPage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Menu</a></li>
+                        <li><a href="./aboutPage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">About Us</a></li>
+                        <li><a href="./services.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Services</a></li>
+                        <li><a href="./contactPage.html" class="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Address -->
+                <div>
+                    <h3 class="font-bold text-xs tracking-widest uppercase mb-5 text-green-300 dark:text-gray-400">Address & Contacts</h3>
+                    <p class="text-sm leading-relaxed mb-5 text-green-100 dark:text-gray-300">
+                        No. 40, Street 273,<br>Sangkat Boeung Kak I,<br>Khan Toul Kork,<br>Phnom Penh, Cambodia
+                    </p>
+                    <ul class="space-y-2 text-sm text-green-100 dark:text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 17-928-998</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 86-243-016</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 97-297-7674</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 69-298-825</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-400 text-xs"></i> (+855) 96-673-3867</li>
+                    </ul>
+                </div>
+
+                <!-- Follow -->
+                <div>
+                    <h3 class="font-bold text-xs tracking-widest uppercase mb-5 text-green-300 dark:text-gray-400">Follow Us</h3>
+                    <div class="bg-white/10 dark:bg-gray-800 backdrop-blur rounded-2xl p-4 flex items-center gap-3 border border-white/10 dark:border-gray-700">
+                        <img src="../../asset/logo_malub-removebg-preview.png" alt="MALUB" class="w-12 h-12 rounded-xl border-2 border-green-400 flex-shrink-0 bg-white p-1">
+                        <div>
+                            <p class="font-bold text-sm text-white">MALUB Restaurant</p>
+                            <p class="text-xs text-green-300 dark:text-gray-400 mb-2">Follow us on Facebook</p>
+                            <button class="text-xs text-white bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded-full flex items-center gap-1 transition-colors font-semibold">
+                                <i class="fa-brands fa-facebook text-xs"></i> Follow
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="border-t border-green-700 dark:border-gray-800 py-5 px-6 text-center text-sm text-green-300 dark:text-gray-500">
+            © 2026 MALUB Restaurant — All Rights Reserved
+        </div>
+    </footer>
+
+    <!-- ── SCRIPTS ── -->
+    <script>
+        // ── Dark Mode ──
+        var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyDark(isDark);
+
+        function applyDark(dark) {
+            isDark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            }
+            var icon = dark ? '🌙' : '☀️';
+            var i1 = document.getElementById('toggleIcon');
+            var i2 = document.getElementById('toggleIconMobile');
+            if (i1) i1.textContent = icon;
+            if (i2) i2.textContent = icon;
+        }
+
+        function toggleDark() {
+            applyDark(!isDark);
+        }
+
+        // ── Mobile Menu ──
+        window.addEventListener('DOMContentLoaded', function() {
+            var btn = document.getElementById('mobileMenuButton');
+            var menu = document.getElementById('mobileMenu');
+            var isOpen = false;
+
+            if (btn && menu) {
+                btn.addEventListener('click', function() {
+                    isOpen = !isOpen;
+                    btn.classList.toggle('ham-open', isOpen);
+                    menu.classList.toggle('open', isOpen);
+                });
+            }
+
+            // Nav link animations
+            document.querySelectorAll('.nav-link').forEach(function(link, i) {
+                link.classList.add('animate-fade-in');
+                link.style.animationDelay = (i * 0.08) + 's';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (isOpen && !btn.contains(e.target) && !menu.contains(e.target)) {
+                    isOpen = false;
+                    btn.classList.remove('ham-open');
+                    menu.classList.remove('open');
+                }
+            });
+        });
+
+        // ── Category Toggle ──
+        function toggleCategory(btn, gridId) {
+            var grid = document.getElementById(gridId);
+            var extras = grid.querySelectorAll('[data-extra]');
+            var open = btn.getAttribute('data-open') === 'true';
+            var label = btn.querySelector('.label');
+            var arrow = btn.querySelector('.arrow');
+            var total = grid.querySelectorAll('.product-card').length;
+
+            for (var i = 0; i < extras.length; i++) {
+                extras[i].style.display = open ? 'none' : 'block';
+            }
+            btn.setAttribute('data-open', open ? 'false' : 'true');
+            arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+            label.textContent = open ? 'See all ' + total + ' items' : 'Show less';
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            AOS.init({ offset: 0, once: true, duration: 800 });
+        });
+    </script>
+</body>
+</html>

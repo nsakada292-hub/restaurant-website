@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Atelier de Joël | Fine Dining Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #0f0f0f;
+            --accent: #c9a962;
+            --accent-light: #e8d5a3;
+            --cream: #faf9f6;
+            --sage: #8b9d83;
+            --terracotta: #c4a484;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+        
+        .font-display {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent);
+        }
+        
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--accent);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        .cursor-outline.hover {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(201, 169, 98, 0.1);
+            border-color: transparent;
+        }
+        
+        /* Grain Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--cream);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        
+        /* Text Reveal Animation */
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        
+        .char {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        
+        /* Magnetic Button */
+        .magnetic-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        /* Menu Card 3D */
+        .menu-card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .menu-card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+        
+        /* Image Reveal */
+        .img-reveal {
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .img-reveal.revealed {
+            clip-path: inset(0 0 0 0);
+        }
+        
+        /* Strikethrough Animation */
+        .strike-hover {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .strike-hover::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .strike-hover:hover::after {
+            width: 100%;
+        }
+        
+        /* Liquid Fill Button */
+        .liquid-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .liquid-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: -1;
+        }
+        
+        .liquid-btn:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+        
+        .liquid-btn:hover {
+            color: white;
+        }
+        
+        /* Wine Pour Animation */
+        @keyframes pour {
+            0% { height: 0; opacity: 0; }
+            20% { opacity: 1; }
+            100% { height: 100%; opacity: 1; }
+        }
+        
+        .wine-pour {
+            animation: pour 1.5s ease-out forwards;
+        }
+        
+        /* Floating Elements */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Glass Morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .glass-dark {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Split Text Lines */
+        .line-wrap {
+            overflow: hidden;
+            display: block;
+        }
+        
+        .line-inner {
+            display: block;
+            transform: translateY(100%);
+        }
+        
+        /* Category Pill Active State */
+        .category-pill.active {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* Menu Item Hover Image */
+        .hover-image {
+            position: fixed;
+            width: 300px;
+            height: 400px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: opacity 0.3s, transform 0.3s;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hover-image.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        
+        /* Table Reservation Form */
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 1rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group label {
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            pointer-events: none;
+            transition: 0.3s ease all;
+            color: rgba(0,0,0,0.5);
+        }
+        
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label,
+        .input-group select:focus ~ label,
+        .input-group select:valid ~ label {
+            top: -0.5rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--primary);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .loader-text {
+            color: var(--accent);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            letter-spacing: 0.5em;
+            opacity: 0;
+        }
+        
+        .loader-line {
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-text">L'ATELIER</div>
+        <div class="loader-line"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Grain Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Hover Image Container -->
+    <div class="hover-image" id="hoverImage">
+        <img src="" alt="" class="w-full h-full object-cover">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 border border-current rounded-full flex items-center justify-center group-hover:bg-amber-500 group-hover:border-amber-500 transition-all duration-300">
+                    <span class="font-display text-lg font-bold group-hover:text-white">L</span>
+                </div>
+                <div class="hidden md:block">
+                    <span class="font-display text-xl font-bold tracking-wider block leading-none">L'ATELIER</span>
+                    <span class="text-[0.6rem] tracking-[0.3em] uppercase opacity-60">de Joël</span>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-12 text-sm tracking-widest uppercase font-light">
+                <a href="#menu" class="strike-hover hover:text-amber-600 transition-colors">Menu</a>
+                <a href="#experience" class="strike-hover hover:text-amber-600 transition-colors">Experience</a>
+                <a href="#reservation" class="strike-hover hover:text-amber-600 transition-colors">Reservations</a>
+                <a href="#contact" class="strike-hover hover:text-amber-600 transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <button onclick="toggleCart()" class="relative magnetic-btn p-2 hover:text-amber-600 transition-colors">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span id="cartIndicator" class="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-white text-[0.6rem] rounded-full flex items-center justify-center opacity-0 scale-0 transition-all">0</span>
+                </button>
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 bg-stone-900 text-white transform translate-x-full transition-transform duration-500 md:hidden">
+        <div class="flex flex-col items-center justify-center h-full gap-8 text-2xl font-display">
+            <a href="#menu" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition-colors">Menu</a>
+            <a href="#experience" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition-colors">Experience</a>
+            <a href="#reservation" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition-colors">Reservations</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition-colors">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Video/Image Placeholder -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920" 
+                 alt="Fine Dining" 
+                 class="w-full h-full object-cover scale-110" 
+                 id="heroImage">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
+        </div>
+
+        <div class="relative z-10 text-center text-white px-6 max-w-5xl mx-auto">
+            <p class="text-amber-400 text-xs md:text-sm tracking-[0.5em] uppercase mb-6 opacity-0" id="heroSubtitle">
+                Michelin Starred Dining
+            </p>
+            <h1 class="font-display text-5xl md:text-8xl lg:text-9xl font-light leading-[0.9] mb-8 overflow-hidden">
+                <span class="block reveal-text">
+                    <span class="inline-block" id="heroTitle1">L'Art de</span>
+                </span>
+                <span class="block reveal-text">
+                    <span class="inline-block italic text-amber-400" id="heroTitle2">la Table</span>
+                </span>
+            </h1>
+            <p class="text-stone-300 text-sm md:text-base max-w-xl mx-auto mb-12 font-light leading-relaxed opacity-0" id="heroDesc">
+                An intimate culinary journey where each dish tells a story of terroir, tradition, and innovation.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center opacity-0" id="heroButtons">
+                <a href="#menu" class="liquid-btn px-8 py-4 border border-white rounded-full text-sm tracking-widest uppercase hover:border-amber-400 transition-colors">
+                    Explore Menu
+                </a>
+                <a href="#reservation" class="px-8 py-4 bg-amber-500 text-black rounded-full text-sm tracking-widest uppercase hover:bg-amber-400 transition-colors">
+                    Book a Table
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white/60 flex flex-col items-center gap-2">
+            <span class="text-[0.6rem] tracking-[0.3em] uppercase">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-white/60 to-transparent"></div>
+        </div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section id="experience" class="py-32 px-6 bg-stone-50">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="relative">
+                <div class="aspect-[3/4] overflow-hidden rounded-lg img-reveal" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800" 
+                         alt="Chef preparing dish" 
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="absolute -bottom-8 -right-8 w-48 h-48 bg-amber-100 rounded-full -z-10 floating"></div>
+                <div class="absolute -top-8 -left-8 w-32 h-32 border border-amber-300 rounded-full -z-10"></div>
+            </div>
+            
+            <div class="md:pl-12">
+                <span class="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4 block">Our Philosophy</span>
+                <h2 class="font-display text-4xl md:text-6xl font-light mb-8 leading-tight">
+                    Where <em class="text-amber-600">passion</em> meets precision
+                </h2>
+                <p class="text-stone-600 leading-relaxed mb-6 font-light">
+                    Under the guidance of Executive Chef Joël Robuchon's protégé, our kitchen transforms the finest seasonal ingredients into edible art. Each plate is a canvas, each flavor a brushstroke in a masterpiece of gastronomy.
+                </p>
+                <p class="text-stone-600 leading-relaxed mb-8 font-light">
+                    We source exclusively from local biodynamic farms and sustainable fisheries, ensuring that every ingredient tells a story of place and purpose.
+                </p>
+                <div class="flex gap-12 text-center">
+                    <div>
+                        <span class="font-display text-4xl text-amber-600 block">15</span>
+                        <span class="text-xs tracking-widest uppercase text-stone-500">Courses</span>
+                    </div>
+                    <div>
+                        <span class="font-display text-4xl text-amber-600 block">3</span>
+                        <span class="text-xs tracking-widest uppercase text-stone-500">Michelin Stars</span>
+                    </div>
+                    <div>
+                        <span class="font-display text-4xl text-amber-600 block">12</span>
+                        <span class="text-xs tracking-widest uppercase text-stone-500">Sommeliers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-32 px-6 bg-white relative">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4 block">Culinary Excellence</span>
+                <h2 class="font-display text-5xl md:text-7xl font-light mb-6">The Menu</h2>
+                <p class="text-stone-500 max-w-2xl mx-auto font-light">A seasonal tasting menu that evolves with nature's rhythm, available as a 7 or 12-course experience</p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="flex flex-wrap justify-center gap-4 mb-16 sticky top-24 z-30 py-4 bg-white/80 backdrop-blur-sm">
+                <button onclick="filterCategory('all')" class="category-pill active px-6 py-3 rounded-full border border-stone-200 text-sm tracking-widest uppercase transition-all hover:border-amber-400" data-filter="all">
+                    All
+                </button>
+                <button onclick="filterCategory('tasting')" class="category-pill px-6 py-3 rounded-full border border-stone-200 text-sm tracking-widest uppercase transition-all hover:border-amber-400" data-filter="tasting">
+                    Tasting Menu
+                </button>
+                <button onclick="filterCategory('a-la-carte')" class="category-pill px-6 py-3 rounded-full border border-stone-200 text-sm tracking-widest uppercase transition-all hover:border-amber-400" data-filter="a-la-carte">
+                    À La Carte
+                </button>
+                <button onclick="filterCategory('wine')" class="category-pill px-6 py-3 rounded-full border border-stone-200 text-sm tracking-widest uppercase transition-all hover:border-amber-400" data-filter="wine">
+                    Wine Pairing
+                </button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="grid lg:grid-cols-2 gap-x-16 gap-y-12" id="menuGrid">
+                
+                <!-- Menu Item 1 -->
+                <div class="menu-item group cursor-pointer" data-category="tasting" data-image="https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=600" onclick="openItemDetail('amuse')">
+                    <div class="flex gap-6 items-start">
+                        <span class="font-display text-4xl text-amber-200 group-hover:text-amber-400 transition-colors">01</span>
+                        <div class="flex-1 border-b border-stone-100 pb-8 group-hover:border-amber-200 transition-colors">
+                            <div class="flex justify-between items-baseline mb-3">
+                                <h3 class="font-display text-2xl group-hover:translate-x-2 transition-transform">Le Citron</h3>
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); addToCart('Le Citron', 24)" class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-amber-50 rounded-full">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="text-amber-600 font-display text-xl">$24</span>
+                                </div>
+                            </div>
+                            <p class="text-stone-500 text-sm leading-relaxed mb-3">Citrus-cured scallop, finger lime caviar, yuzu gel, coriander flowers</p>
+                            <div class="flex gap-2">
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-stone-200 px-2 py-1 rounded">Raw</span>
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-stone-200 px-2 py-1 rounded">GF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 2 -->
+                <div class="menu-item group cursor-pointer" data-category="tasting" data-image="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=600" onclick="openItemDetail('foie')">
+                    <div class="flex gap-6 items-start">
+                        <span class="font-display text-4xl text-amber-200 group-hover:text-amber-400 transition-colors">02</span>
+                        <div class="flex-1 border-b border-stone-100 pb-8 group-hover:border-amber-200 transition-colors">
+                            <div class="flex justify-between items-baseline mb-3">
+                                <h3 class="font-display text-2xl group-hover:translate-x-2 transition-transform">Foie Gras</h3>
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); addToCart('Foie Gras', 38)" class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-amber-50 rounded-full">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="text-amber-600 font-display text-xl">$38</span>
+                                </div>
+                            </div>
+                            <p class="text-stone-500 text-sm leading-relaxed mb-3">Seared foie gras, fig compote, brioche crumb, aged balsamic reduction</p>
+                            <div class="flex gap-2">
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-amber-200 text-amber-600 px-2 py-1 rounded">Chef's Choice</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 3 -->
+                <div class="menu-item group cursor-pointer" data-category="tasting" data-image="https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=600" onclick="openItemDetail('lobster')">
+                    <div class="flex gap-6 items-start">
+                        <span class="font-display text-4xl text-amber-200 group-hover:text-amber-400 transition-colors">03</span>
+                        <div class="flex-1 border-b border-stone-100 pb-8 group-hover:border-amber-200 transition-colors">
+                            <div class="flex justify-between items-baseline mb-3">
+                                <h3 class="font-display text-2xl group-hover:translate-x-2 transition-transform">Homard</h3>
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); addToCart('Homard', 52)" class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-amber-50 rounded-full">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="text-amber-600 font-display text-xl">$52</span>
+                                </div>
+                            </div>
+                            <p class="text-stone-500 text-sm leading-relaxed mb-3">Butter-poached lobster, champagne beurre blanc, caviar, edible gold leaf</p>
+                            <div class="flex gap-2">
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-stone-200 px-2 py-1 rounded">GF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 4 -->
+                <div class="menu-item group cursor-pointer" data-category="a-la-carte" data-image="https://images.unsplash.com/photo-1546241072-48010ad2862c?auto=format&fit=crop&w=600" onclick="openItemDetail('wagyu')">
+                    <div class="flex gap-6 items-start">
+                        <span class="font-display text-4xl text-amber-200 group-hover:text-amber-400 transition-colors">04</span>
+                        <div class="flex-1 border-b border-stone-100 pb-8 group-hover:border-amber-200 transition-colors">
+                            <div class="flex justify-between items-baseline mb-3">
+                                <h3 class="font-display text-2xl group-hover:translate-x-2 transition-transform">Wagyu A5</h3>
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); addToCart('Wagyu A5', 95)" class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-amber-50 rounded-full">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="text-amber-600 font-display text-xl">$95</span>
+                                </div>
+                            </div>
+                            <p class="text-stone-500 text-sm leading-relaxed mb-3">Miyazaki A5 wagyu, truffle jus, smoked potato purée, seasonal vegetables</p>
+                            <div class="flex gap-2">
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-amber-200 text-amber-600 px-2 py-1 rounded">Premium</span>
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-stone-200 px-2 py-1 rounded">GF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 5 -->
+                <div class="menu-item group cursor-pointer" data-category="a-la-carte" data-image="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600" onclick="openItemDetail('risotto')">
+                    <div class="flex gap-6 items-start">
+                        <span class="font-display text-4xl text-amber-200 group-hover:text-amber-400 transition-colors">05</span>
+                        <div class="flex-1 border-b border-stone-100 pb-8 group-hover:border-amber-200 transition-colors">
+                            <div class="flex justify-between items-baseline mb-3">
+                                <h3 class="font-display text-2xl group-hover:translate-x-2 transition-transform">Risotto al Tartufo</h3>
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); addToCart('Risotto al Tartufo', 42)" class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-amber-50 rounded-full">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="text-amber-600 font-display text-xl">$42</span>
+                                </div>
+                            </div>
+                            <p class="text-stone-500 text-sm leading-relaxed mb-3">Carnaroli rice, black winter truffle, parmesan reggiano, truffle foam</p>
+                            <div class="flex gap-2">
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-stone-200 px-2 py-1 rounded">Vegetarian</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 6 -->
+                <div class="menu-item group cursor-pointer" data-category="wine" data-image="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600" onclick="openItemDetail('wine-pairing')">
+                    <div class="flex gap-6 items-start">
+                        <span class="font-display text-4xl text-amber-200 group-hover:text-amber-400 transition-colors">WP</span>
+                        <div class="flex-1 border-b border-stone-100 pb-8 group-hover:border-amber-200 transition-colors">
+                            <div class="flex justify-between items-baseline mb-3">
+                                <h3 class="font-display text-2xl group-hover:translate-x-2 transition-transform">Wine Pairing</h3>
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); addToCart('Wine Pairing', 120)" class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-amber-50 rounded-full">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="text-amber-600 font-display text-xl">$120</span>
+                                </div>
+                            </div>
+                            <p class="text-stone-500 text-sm leading-relaxed mb-3">Seven carefully selected wines to accompany your tasting journey, featuring rare vintages from our cellar</p>
+                            <div class="flex gap-2">
+                                <span class="text-[0.6rem] tracking-widest uppercase border border-amber-200 text-amber-600 px-2 py-1 rounded">Sommelier Selection</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Wine Section Preview -->
+            <div class="mt-24 p-8 md:p-16 bg-stone-900 text-white rounded-2xl relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20">
+                    <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1200" class="w-full h-full object-cover" alt="Wine cellar">
+                </div>
+                <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4 block">The Cellar</span>
+                        <h3 class="font-display text-4xl md:text-5xl mb-6">15,000 Bottles of Excellence</h3>
+                        <p class="text-stone-300 leading-relaxed mb-8 font-light">
+                            Our award-winning wine collection spans six decades and includes rare vintages from Bordeaux, Burgundy, and emerging biodynamic producers. Let our Master Sommelier guide your selection.
+                        </p>
+                        <button class="liquid-btn px-8 py-4 border border-amber-400 text-amber-400 rounded-full text-sm tracking-widest uppercase hover:text-white transition-colors">
+                            View Wine List
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/10 backdrop-blur p-6 rounded-lg text-center">
+                            <span class="font-display text-3xl text-amber-400 block">2,500</span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Labels</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur p-6 rounded-lg text-center">
+                            <span class="font-display text-3xl text-amber-400 block">1945</span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Oldest Vintage</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur p-6 rounded-lg text-center">
+                            <span class="font-display text-3xl text-amber-400 block">12</span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Sommeliers</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur p-6 rounded-lg text-center">
+                            <span class="font-display text-3xl text-amber-400 block">98</span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Wine Spectator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-32 px-6 bg-stone-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4 block">Reservations</span>
+                <h2 class="font-display text-5xl md:text-6xl font-light mb-6">Book Your Experience</h2>
+                <p class="text-stone-500 font-light">Tables are held for 15 minutes past reservation time. Dress code: Smart elegant.</p>
+            </div>
+
+            <form class="bg-white p-8 md:p-16 rounded-2xl shadow-xl" onsubmit="handleReservation(event)">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="input-group">
+                        <input type="text" id="name" placeholder=" " required>
+                        <label for="name">Full Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder=" " required>
+                        <label for="email">Email Address</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="phone" placeholder=" " required>
+                        <label for="phone">Phone Number</label>
+                    </div>
+                    <div class="input-group">
+                        <select id="guests" required>
+                            <option value="" disabled selected></option>
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="5">5 Guests</option>
+                            <option value="6">6+ Guests</option>
+                        </select>
+                        <label for="guests">Number of Guests</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="date" id="date" required>
+                        <label for="date" style="top: -0.5rem; font-size: 0.8rem; color: var(--accent);">Preferred Date</label>
+                    </div>
+                    <div class="input-group">
+                        <select id="time" required>
+                            <option value="" disabled selected></option>
+                            <option value="18:00">6:00 PM</option>
+                            <option value="18:30">6:30 PM</option>
+                            <option value="19:00">7:00 PM</option>
+                            <option value="19:30">7:30 PM</option>
+                            <option value="20:00">8:00 PM</option>
+                            <option value="20:30">8:30 PM</option>
+                            <option value="21:00">9:00 PM</option>
+                        </select>
+                        <label for="time">Preferred Time</label>
+                    </div>
+                </div>
+                
+                <div class="input-group mt-8">
+                    <textarea id="notes" rows="3" class="w-full bg-transparent border-b border-stone-200 focus:border-amber-400 outline-none resize-none pt-4" placeholder="Special occasions, dietary restrictions, seating preferences..."></textarea>
+                </div>
+
+                <div class="mt-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <p class="text-sm text-stone-500 text-center md:text-left">
+                        By booking, you agree to our <a href="#" class="underline hover:text-amber-600">cancellation policy</a>
+                    </p>
+                    <button type="submit" class="magnetic-btn px-12 py-4 bg-stone-900 text-white rounded-full text-sm tracking-widest uppercase hover:bg-amber-600 transition-colors w-full md:w-auto">
+                        Confirm Reservation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-stone-900 text-white py-20 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 border border-amber-400 rounded-full flex items-center justify-center">
+                        <span class="font-display text-xl font-bold text-amber-400">L</span>
+                    </div>
+                    <div>
+                        <span class="font-display text-2xl font-bold tracking-wider block leading-none">L'ATELIER</span>
+                        <span class="text-[0.6rem] tracking-[0.3em] uppercase text-stone-400">de Joël</span>
+                    </div>
+                </div>
+                <p class="text-stone-400 text-sm leading-relaxed">
+                    An intimate 40-seat restaurant dedicated to the art of French gastronomy.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-xs tracking-[0.3em] uppercase mb-6 text-amber-400">Location</h4>
+                <p class="text-stone-300 text-sm leading-relaxed mb-2">42 Avenue Montaigne</p>
+                <p class="text-stone-300 text-sm leading-relaxed mb-2">75008 Paris, France</p>
+                <p class="text-stone-400 text-sm mt-4">Metro: Franklin D. Roosevelt</p>
+            </div>
+            
+            <div>
+                <h4 class="text-xs tracking-[0.3em] uppercase mb-6 text-amber-400">Hours</h4>
+                <p class="text-stone-300 text-sm mb-2">Tuesday - Saturday</p>
+                <p class="text-stone-400 text-sm mb-4">7:00 PM - 10:00 PM</p>
+                <p class="text-stone-500 text-sm">Closed Sunday & Monday</p>
+            </div>
+            
+            <div>
+                <h4 class="text-xs tracking-[0.3em] uppercase mb-6 text-amber-400">Contact</h4>
+                <p class="text-stone-300 text-sm mb-2">+33 1 42 25 55 55</p>
+                <p class="text-stone-400 text-sm mb-4">reservations@latelier.fr</p>
+                <div class="flex gap-4 mt-6">
+                    <a href="#" class="w-10 h-10 border border-stone-700 rounded-full flex items-center justify-center hover:border-amber-400 hover:text-amber-400 transition-colors">
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 border border-stone-700 rounded-full flex items-center justify-center hover:border-amber-400 hover:text-amber-400 transition-colors">
+                        <i data-lucide="facebook" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-stone-600 text-xs">&copy; 2026 L'Atelier de Joël. All rights reserved.</p>
+            <div class="flex gap-6 text-xs text-stone-600">
+                <a href="#" class="hover:text-amber-400 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-amber-400 transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0" id="cartOverlay" onclick="toggleCart()"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-500" id="cartPanel">
+            <div class="h-full flex flex-col">
+                <div class="p-8 border-b border-stone-100 flex justify-between items-center">
+                    <h2 class="font-display text-2xl">Your Selection</h2>
+                    <button onclick="toggleCart()" class="p-2 hover:bg-stone-100 rounded-full transition-colors">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <div class="flex-1 overflow-y-auto p-8" id="cartItems">
+                    <p class="text-stone-400 text-center py-12 font-light">Your cart is empty</p>
+                </div>
+                
+                <div class="p-8 border-t border-stone-100 bg-stone-50">
+                    <div class="flex justify-between mb-2 text-sm text-stone-600">
+                        <span>Subtotal</span>
+                        <span id="cartSubtotal">$0</span>
+                    </div>
+                    <div class="flex justify-between mb-6 text-sm text-stone-600">
+                        <span>Service Charge (15%)</span>
+                        <span id="cartService">$0</span>
+                    </div>
+                    <div class="flex justify-between mb-8 text-xl font-display font-bold">
+                        <span>Total</span>
+                        <span id="cartTotal">$0</span>
+                    </div>
+                    <button class="w-full py-4 bg-stone-900 text-white rounded-full text-sm tracking-widest uppercase hover:bg-amber-600 transition-colors">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Detail Modal -->
+    <div id="itemModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeItemDetail()"></div>
+        <div class="relative bg-white rounded-2xl overflow-hidden max-w-5xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-500" id="itemModalPanel">
+            <button onclick="closeItemDetail()" class="absolute top-6 right-6 z-10 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="grid md:grid-cols-2">
+                <div class="h-64 md:h-auto relative">
+                    <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent md:hidden"></div>
+                </div>
+                
+                <div class="p-8 md:p-12 flex flex-col justify-center">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-amber-600 text-xs tracking-[0.3em] uppercase" id="modalCategory">Tasting Menu</span>
+                        <span class="w-1 h-1 bg-stone-300 rounded-full"></span>
+                        <span class="text-stone-400 text-xs" id="modalNumber">Course 01</span>
+                    </div>
+                    
+                    <h2 id="modalTitle" class="font-display text-4xl md:text-5xl mb-6"></h2>
+                    <p id="modalDesc" class="text-stone-600 leading-relaxed mb-8 font-light text-lg"></p>
+                    
+                    <div class="grid grid-cols-3 gap-6 mb-8 py-6 border-y border-stone-100">
+                        <div>
+                            <span class="block text-2xl font-display text-amber-600 mb-1" id="modalPrice"></span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Per Person</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-display text-stone-900 mb-1" id="modalCal"></span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Calories</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-display text-stone-900 mb-1" id="modalTime"></span>
+                            <span class="text-xs tracking-widest uppercase text-stone-400">Prep Time</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 class="text-xs tracking-[0.3em] uppercase mb-4 text-stone-900">Wine Pairing</h4>
+                        <div class="flex items-center gap-4 p-4 bg-stone-50 rounded-lg">
+                            <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="wine" class="w-6 h-6 text-amber-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-sm" id="modalWine">Chablis Premier Cru 2019</p>
+                                <p class="text-xs text-stone-500">Suggested pairing</p>
+                            </div>
+                            <span class="text-amber-600 font-display">+$18</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex items-center border border-stone-200 rounded-full">
+                            <button onclick="adjustModalQty(-1)" class="px-4 py-2 hover:bg-stone-50 rounded-l-full">-</button>
+                            <span class="px-4 font-medium" id="modalQty">1</span>
+                            <button onclick="adjustModalQty(1)" class="px-4 py-2 hover:bg-stone-50 rounded-r-full">+</button>
+                        </div>
+                        <button onclick="addModalToCart()" class="flex-1 bg-stone-900 text-white rounded-full hover:bg-amber-600 transition-colors text-sm tracking-widest uppercase">
+                            Add to Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-stone-900 text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-3 translate-y-20 opacity-0 transition-all duration-500 z-50">
+        <i data-lucide="check-circle" class="w-5 h-5 text-amber-400"></i>
+        <span id="toastMessage">Added to cart</span>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Loading Animation
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            
+            tl.to('.loader-text', {
+                opacity: 1,
+                duration: 1,
+                ease: 'power2.out'
+            })
+            .to('.loader-line', {
+                width: '200px',
+                duration: 1.5,
+                ease: 'power2.inOut'
+            }, '-=0.5')
+            .to('.loader', {
+                yPercent: -100,
+                duration: 1,
+                ease: 'power4.inOut'
+            })
+            .from('#heroSubtitle', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            }, '-=0.5')
+            .from('#heroTitle1', {
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power3.out'
+            }, '-=0.8')
+            .from('#heroTitle2', {
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power3.out'
+            }, '-=1')
+            .from('#heroDesc', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            }, '-=0.8')
+            .from('#heroButtons', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            }, '-=0.8');
+        });
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: 'forwards' });
+        });
+
+        // Cursor hover effects
+        document.querySelectorAll('a, button, .menu-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+            
+            // Navbar background
+            const navbar = document.getElementById('navbar');
+            if (winScroll > 50) {
+                navbar.classList.add('glass', 'shadow-sm');
+            } else {
+                navbar.classList.remove('glass', 'shadow-sm');
+            }
+        });
+
+        // Image Reveal on Scroll
+        gsap.utils.toArray('.img-reveal').forEach(img => {
+            ScrollTrigger.create({
+                trigger: img,
+                start: 'top 80%',
+                onEnter: () => img.classList.add('revealed')
+            });
+        });
+
+        // Menu Items Animation
+        gsap.utils.toArray('.menu-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Hover Image Effect
+        const hoverImage = document.getElementById('hoverImage');
+        const hoverImg = hoverImage.querySelector('img');
+
+        document.querySelectorAll('.menu-item[data-image]').forEach(item => {
+            item.addEventListener('mouseenter', (e) => {
+                hoverImg.src = item.dataset.image;
+                hoverImage.classList.add('visible');
+            });
+            
+            item.addEventListener('mousemove', (e) => {
+                hoverImage.style.left = e.clientX + 'px';
+                hoverImage.style.top = e.clientY + 'px';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                hoverImage.classList.remove('visible');
+            });
+        });
+
+        // Category Filter
+        function filterCategory(category) {
+            // Update buttons
+            document.querySelectorAll('.category-pill').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Filter items with animation
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    gsap.to(item, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.5,
+                        display: 'block'
+                    });
+                } else {
+                    gsap.to(item, {
+                        opacity: 0,
+                        y: 20,
+                        scale: 0.95,
+                        duration: 0.3,
+                        onComplete: () => {
+                            item.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        }
+
+        // Cart Functionality
+        let cart = [];
+        let modalQty = 1;
+        let currentModalItem = null;
+
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCart();
+            showToast(`${name} added to cart`);
+        }
+
+        function updateCart() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const indicator = document.getElementById('cartIndicator');
+            
+            if (count > 0) {
+                indicator.textContent = count;
+                indicator.classList.remove('opacity-0', 'scale-0');
+            } else {
+                indicator.classList.add('opacity-0', 'scale-0');
+            }
+
+            // Update cart drawer
+            const cartItems = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-stone-400 text-center py-12 font-light">Your cart is empty</p>';
+            } else {
+                cartItems.innerHTML = cart.map((item, index) => `
+                    <div class="flex gap-4 mb-6 pb-6 border-b border-stone-100">
+                        <div class="flex-1">
+                            <h4 class="font-display text-lg mb-1">${item.name}</h4>
+                            <p class="text-sm text-stone-500">$${item.price} each</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button onclick="updateQuantity(${index}, -1)" class="w-8 h-8 border border-stone-200 rounded-full flex items-center justify-center hover:border-amber-400 transition-colors">-</button>
+                            <span class="w-8 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity(${index}, 1)" class="w-8 h-8 border border-stone-200 rounded-full flex items-center justify-center hover:border-amber-400 transition-colors">+</button>
+                        </div>
+                        <span class="font-display text-lg w-20 text-right">$${item.price * item.quantity}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Update totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const service = subtotal * 0.15;
+            const total = subtotal + service;
+
+            document.getElementById('cartSubtotal').textContent = `$${subtotal}`;
+            document.getElementById('cartService').textContent = `$${service.toFixed(0)}`;
+            document.getElementById('cartTotal').textContent = `$${total.toFixed(0)}`;
+        }
+
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCart();
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            const panel = document.getElementById('cartPanel');
+            
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                overlay.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 500);
+            }
+        }
+
+        // Item Detail Modal
+        const itemData = {
+            'amuse': {
+                title: 'Le Citron',
+                category: 'Tasting Menu',
+                number: 'Course 01',
+                price: 24,
+                cal: '180',
+                time: '12 min',
+                image: 'https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=800',
+                desc: 'A bright, citrus-forward amuse-bouche featuring Hokkaido scallop cured in yuzu and lemon zest. Accompanied by explosive finger lime caviar, delicate yuzu gel, and edible coriander flowers harvested from our rooftop garden. Served on a chilled river stone.',
+                wine: 'Chablis Premier Cru 2019'
+            },
+            'foie': {
+                title: 'Foie Gras',
+                category: 'Tasting Menu',
+                number: 'Course 02',
+                price: 38,
+                cal: '420',
+                time: '18 min',
+                image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=800',
+                desc: 'Pan-seared foie gras from the Landes region, served with house-made fig compote slow-cooked with vanilla and port. Accompanied by crispy brioche crumb and finished with 25-year aged balsamic from Modena.',
+                wine: 'Sauternes Château d\'Yquem 2015'
+            },
+            'lobster': {
+                title: 'Homard',
+                category: 'Tasting Menu',
+                number: 'Course 03',
+                price: 52,
+                cal: '320',
+                time: '22 min',
+                image: 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=800',
+                desc: 'Live Maine lobster butter-poached to perfection, served with a champagne beurre blanc infused with tarragon. Topped with Osetra caviar and edible gold leaf. Accompanied by compressed cucumber and fennel.',
+                wine: 'Krug Grande Cuvée NV'
+            },
+            'wagyu': {
+                title: 'Wagyu A5',
+                category: 'À La Carte',
+                number: 'Signature',
+                price: 95,
+                cal: '580',
+                time: '25 min',
+                image: 'https://images.unsplash.com/photo-1546241072-48010ad2862c?auto=format&fit=crop&w=800',
+                desc: 'Miyazaki A5 wagyu, the highest grade of Japanese beef, grilled over binchotan charcoal. Served with truffle jus, smoked potato purée, and seasonal vegetables from our garden. The beef melts at room temperature.',
+                wine: 'Barolo Monfortino 2010'
+            },
+            'risotto': {
+                title: 'Risotto al Tartufo',
+                category: 'À La Carte',
+                number: 'Vegetarian',
+                price: 42,
+                cal: '480',
+                time: '28 min',
+                image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=800',
+                desc: 'Carnaroli rice aged for 7 years, cooked to perfect al dente texture with white wine and vegetable stock. Generously shaved black winter truffle from Périgord, finished with 36-month aged Parmigiano-Reggiano and truffle foam.',
+                wine: 'Barbaresco Gaja 2017'
+            },
+            'wine-pairing': {
+                title: 'Wine Pairing Experience',
+                category: 'Wine',
+                number: 'Full Journey',
+                price: 120,
+                cal: '0',
+                time: '3 hours',
+                image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800',
+                desc: 'Seven wines carefully selected by our Master Sommelier to accompany your tasting menu. Includes rare vintages from Bordeaux, Burgundy, and Champagne, as well as selections from emerging biodynamic producers.',
+                wine: 'Multiple Selections'
+            }
+        };
+
+        function openItemDetail(id) {
+            const item = itemData[id];
+            if (!item) return;
+            
+            currentModalItem = item;
+            modalQty = 1;
+            
+            document.getElementById('modalImage').src = item.image;
+            document.getElementById('modalCategory').textContent = item.category;
+            document.getElementById('modalNumber').textContent = item.number;
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalDesc').textContent = item.desc;
+            document.getElementById('modalPrice').textContent = '$' + item.price;
+            document.getElementById('modalCal').textContent = item.cal;
+            document.getElementById('modalTime').textContent = item.time;
+            document.getElementById('modalWine').textContent = item.wine;
+            document.getElementById('modalQty').textContent = modalQty;
+            
+            const modal = document.getElementById('itemModal');
+            const panel = document.getElementById('itemModalPanel');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                panel.classList.remove('scale-95', 'opacity-0');
+                panel.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeItemDetail() {
+            const modal = document.getElementById('itemModal');
+            const panel = document.getElementById('itemModalPanel');
+            
+            panel.classList.remove('scale-100', 'opacity-100');
+            panel.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 500);
+        }
+
+        function adjustModalQty(change) {
+            modalQty = Math.max(1, modalQty + change);
+            document.getElementById('modalQty').textContent = modalQty;
+        }
+
+        function addModalToCart() {
+            if (currentModalItem) {
+                for (let i = 0; i < modalQty; i++) {
+                    addToCart(currentModalItem.title, currentModalItem.price);
+                }
+                closeItemDetail();
+            }
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Reservation Form
+        function handleReservation(e) {
+            e.preventDefault();
+            showToast('Reservation request submitted. We will confirm shortly.');
+            e.target.reset();
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+            } else {
+                menu.classList.add('translate-x-full');
+            }
+        }
+
+        // Magnetic Buttons
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Parallax Hero Image
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.getElementById('heroImage');
+            heroImage.style.transform = `translateY(${scrolled * 0.5}px) scale(1.1)`;
+        });
+    </script>
+</body>
+</html>

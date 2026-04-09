@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign-in-MALUB Restaurant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-color: #4f46e5;
+      --success-color: #10b981;
+      --error-color: #ef4444;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --border-color: #e5e7eb;
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #667eea, #764ba2);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      padding: 20px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      position: relative;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .form-header {
+      padding: 40px 40px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-gradient);
+      border-radius: 16px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      box-shadow: var(--shadow-lg);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .form-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.025em;
+    }
+
+    .form-subtitle {
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .form-tabs {
+      display: flex;
+      background: #f8fafc;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 16px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .tab-button.active {
+    color: #16a34a;
+    background: white;
+    box-shadow: 0 -2px 0 #16a34a;
+    }
+
+    .tab-button:hover:not(.active) {
+      color: var(--text-primary);
+      background: rgba(79, 70, 229, 0.05);
+    }
+
+    .form-content {
+      padding: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: 0.025em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 16px;
+      background: white;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-primary);
+    }
+
+    .form-input:focus {
+    outline: none;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1);
+    transform: translateY(-2px);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .form-button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      letter-spacing: 0.025em;
+    }
+
+    .form-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .form-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .form-button:hover::before {
+      left: 100%;
+    }
+
+    .form-button:active {
+      transform: translateY(0);
+    }
+
+    .form-divider {
+      display: flex;
+      align-items: center;
+      margin: 32px 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .form-divider::before,
+    .form-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .form-divider span {
+      padding: 0 16px;
+      background: white;
+    }
+
+    .social-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .social-button {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .social-button:hover {
+      border-color: #16a34a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .forgot-password a {
+      color: #16a34a;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .forgot-password a:hover {
+      color: #15803d;
+      text-decoration: underline;
+    }
+
+    .form-footer {
+      padding: 20px 40px;
+      background: #f8fafc;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .form-footer a {
+      color: #16a34a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Form switching animation */
+    .form-slide {
+      display: none;
+      animation: fadeInSlide 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-slide.active {
+      display: block;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .auth-container {
+        margin: 10px;
+        border-radius: 20px;
+      }
+      
+      .form-header,
+      .form-content {
+        padding: 30px 30px;
+      }
+      
+      .form-title {
+        font-size: 24px;
+      }
+    }
+
+    /* Loading state */
+    .loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Header -->
+    <div class="form-header">
+      <div class="logo" style="background: none; box-shadow: none;">
+        <img src="../asset/logo_malub-removebg-preview.png" alt="MALUB Logo" style="width: 150px; height: 150px; object-fit: contain;">
+      </div>
+      <h1 class="form-title" id="formTitle">Welcome Back</h1>
+      <p class="form-subtitle" id="formSubtitle">Sign in to your account to continue</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="form-tabs">
+      <button class="tab-button active" onclick="switchForm('login')">Sign In</button>
+      <button class="tab-button" onclick="switchForm('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm" class="form-slide active">
+      <div class="form-content">
+        <div class="social-buttons">
+          <button class="social-button">
+            <span>🔍</span> Google
+          </button>
+          <button class="social-button">
+            <span>📘</span> Facebook
+          </button>
+        </div>
+
+        <div class="form-divider">
+          <span>or continue with email</span>
+        </div>
+
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="Enter your email" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" placeholder="Enter your password" required />
+          </div>
+
+          <button type="submit" class="form-button" id="loginBtn">
+            Sign In
+          </button>
+        </form>
+
+        <div class="forgot-password">
+          <a href="#" onclick="showForgotPassword()">Forgot your password?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signupForm" class="form-slide">
+      <div class="form-content">
+        <div class="social-buttons">
+          <button class="social-button">
+            <span>🔍</span> Google
+          </button>
+          <button class="social-button">
+            <span>📘</span> Facebook
+          </button>
+        </div>
+
+        <div class="form-divider">
+          <span>or create account with email</span>
+        </div>
+
+        <form onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" placeholder="Enter your full name" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="Enter your email" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" placeholder="Create a strong password" required />
+          </div>
+
+          <button type="submit" class="form-button" id="signupBtn">
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="form-footer">
+      <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Form switching functionality
+    function switchForm(formType) {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const title = document.getElementById('formTitle');
+      const subtitle = document.getElementById('formSubtitle');
+
+      // Update active tab
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Switch forms
+      if (formType === 'login') {
+        loginForm.classList.add('active');
+        signupForm.classList.remove('active');
+        title.textContent = 'Welcome Back';
+        subtitle.textContent = 'Sign in to your account to continue';
+      } else {
+        signupForm.classList.add('active');
+        loginForm.classList.remove('active');
+        title.textContent = 'Create Account';
+        subtitle.textContent = 'Join us today and get started';
+      }
+    }
+
+    // Handle login form submission
+    function handleLogin(event) {
+      event.preventDefault();
+      const button = document.getElementById('loginBtn');
+      
+      // Add loading state
+      button.classList.add('loading');
+      button.textContent = 'Signing In...';
+      
+      // Simulate API call
+      setTimeout(() => {
+        button.classList.remove('loading');
+        button.textContent = 'Sign In';
+        alert('Login successful! (This is a demo)');
+      }, 2000);
+    }
+
+    // Handle signup form submission
+    function handleSignup(event) {
+      event.preventDefault();
+      const button = document.getElementById('signupBtn');
+      
+      // Add loading state
+      button.classList.add('loading');
+      button.textContent = 'Creating Account...';
+      
+      // Simulate API call
+      setTimeout(() => {
+        button.classList.remove('loading');
+        button.textContent = 'Create Account';
+        alert('Account created successfully! (This is a demo)');
+      }, 2000);
+    }
+
+    // Show forgot password (placeholder)
+    function showForgotPassword() {
+      alert('Forgot password functionality would be implemented here.');
+    }
+
+    // Add input focus animations
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('focused');
+      });
+    });
+
+    // Add social button click handlers
+    document.querySelectorAll('.social-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const provider = this.textContent.trim();
+        alert(`${provider} authentication would be implemented here.`);
+      });
+    });
+  </script>
+</body>
+</html>

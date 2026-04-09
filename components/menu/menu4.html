@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MALUB — Our Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .font-display { font-family: 'Playfair Display', serif; }
+    @keyframes carouselSlide { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .carousel-track { animation: carouselSlide 28s linear infinite; }
+    .carousel-track:hover { animation-play-state: paused; }
+    .fade-up { animation: fadeUp 0.5s ease both; }
+    .nav-link { position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:2px; background:currentColor; transform:scaleX(0); transform-origin:right; transition:transform 0.3s ease; }
+    .nav-link:hover::after { transform:scaleX(1); transform-origin:left; }
+    .menu-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 24px 52px rgba(13,43,26,0.13); }
+    .c-slide { transition: transform 0.3s ease; }
+    .c-slide:hover { transform: translateY(-5px) scale(1.04); }
+  </style>
+</head>
+<body class="bg-green-50 min-h-screen overflow-x-hidden">
+
+<!-- NAVBAR -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-green-200 shadow-md">
+  <nav class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+    <a href="#" class="text-2xl font-bold text-green-700">MALUB</a>
+    <div class="hidden md:flex gap-7">
+      <a href="./homePage.html"    class="nav-link text-gray-700 hover:text-green-700 text-sm font-medium transition-colors">Home</a>
+      <a href="./menuPage.html"    class="nav-link text-green-700 font-semibold text-sm">Menu</a>
+      <a href="./aboutPage.html"   class="nav-link text-gray-700 hover:text-green-700 text-sm font-medium transition-colors">About Us</a>
+      <a href="./services.html"    class="nav-link text-gray-700 hover:text-green-700 text-sm font-medium transition-colors">Services</a>
+      <a href="./contactPage.html" class="nav-link text-gray-700 hover:text-green-700 text-sm font-medium transition-colors">Contact</a>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <a href="./sign_in.html" class="bg-green-800 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-green-600 transition-colors">Sign In</a>
+    </div>
+    <button id="mobileBtn" class="md:hidden text-gray-700">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </nav>
+  <div id="mobileMenu" class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full z-50" style="display:none">
+    <div class="max-w-7xl mx-auto px-5 py-5 flex flex-col gap-4 text-sm font-medium">
+      <a href="./homePage.html" class="text-gray-700">Home</a>
+      <a href="./menuPage.html" class="text-green-700 font-semibold">Menu</a>
+      <a href="./aboutPage.html" class="text-gray-700">About Us</a>
+      <a href="./services.html" class="text-gray-700">Services</a>
+      <a href="./contactPage.html" class="text-gray-700">Contact</a>
+      <a href="./sign_in.html" class="bg-green-800 text-white px-5 py-2 rounded-xl w-max">Sign In</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="relative bg-cover bg-center min-h-[52vh] flex items-center justify-center overflow-hidden"
+  style="background-image:linear-gradient(rgba(8,24,14,0.76),rgba(8,24,14,0.82)),url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&auto=format&fit=crop&q=80')">
+  <div class="absolute top-6 right-12 grid gap-2 opacity-10" style="grid-template-columns:repeat(5,1fr)">
+    <script>document.write('<span class="w-1.5 h-1.5 bg-green-300 rounded-full block"></span>'.repeat(20))</script>
+  </div>
+  <div class="relative z-10 text-center px-6 pt-24 pb-16">
+    <p class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-green-300 border border-green-300/40 bg-green-300/10 px-4 py-1.5 rounded-full mb-5">
+      <span class="w-1.5 h-1.5 bg-green-300 rounded-full animate-pulse"></span> Fresh Today
+    </p>
+    <h1 class="font-display text-6xl sm:text-7xl lg:text-9xl font-bold text-white leading-tight">
+      Our <em class="text-green-300 italic">Menu</em>
+    </h1>
+    <p class="mt-5 text-white/60 text-sm sm:text-lg font-light tracking-wide max-w-xl mx-auto">
+      Every dish made with love, fresh ingredients &amp; authentic Khmer flavour
+    </p>
+  </div>
+</div>
+
+<!-- CAROUSEL -->
+<div class="bg-green-100 py-10 overflow-hidden">
+  <p class="text-center text-xs font-bold tracking-widest uppercase text-green-600 mb-7">✦ What We Serve ✦</p>
+  <div class="relative overflow-hidden">
+    <div class="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none bg-gradient-to-r from-green-100 to-transparent"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none bg-gradient-to-l from-green-100 to-transparent"></div>
+    <div class="carousel-track flex gap-5 w-max px-4">
+      <script>
+        const slides=[
+          {img:'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&auto=format&fit=crop&q=80',name:'Khmer Curry'},
+          {img:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&auto=format&fit=crop&q=80',name:'Rice Box'},
+          {img:'https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&auto=format&fit=crop&q=80',name:'Fresh Sushi'},
+          {img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop&q=80',name:'Green Salad'},
+          {img:'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&auto=format&fit=crop&q=80',name:'Num Banh Chok'},
+          {img:'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&auto=format&fit=crop&q=80',name:'BBQ Chicken'},
+          {img:'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop&q=80',name:'Mango Dessert'},
+          {img:'https://images.unsplash.com/photo-1558857563-b371033873b8?w=400&auto=format&fit=crop&q=80',name:'Bubble Tea'},
+          {img:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop&q=80',name:'Pandan Cake'},
+          {img:'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400&auto=format&fit=crop&q=80',name:'Espresso'},
+          {img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&auto=format&fit=crop&q=80',name:'Coconut Pudding'},
+          {img:'https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=400&auto=format&fit=crop&q=80',name:'Amok Fish'},
+        ];
+        document.write([...slides,...slides].map(s=>`
+          <div class="c-slide flex-shrink-0 w-44 h-44 rounded-2xl overflow-hidden relative border-2 border-white cursor-default shadow-md">
+            <img src="${s.img}" alt="${s.name}" class="w-full h-full object-cover"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 to-transparent"></div>
+            <span class="absolute bottom-2 left-0 right-0 text-center text-xs font-semibold text-white px-2">${s.name}</span>
+          </div>`).join(''));
+      </script>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER TABS -->
+<div class="sticky top-0 z-40 bg-green-50/95 backdrop-blur-md border-b border-green-200 px-4">
+  <div class="max-w-6xl mx-auto flex gap-2 overflow-x-auto py-4 justify-center">
+    <button onclick="filterCat(this,'all')"     class="filter-tab shrink-0 flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-green-800 bg-green-800 text-white text-sm font-semibold transition-all duration-200 cursor-pointer">
+      🍽️ All <span id="cnt-all" class="bg-white/20 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+    </button>
+    <button onclick="filterCat(this,'food')"    class="filter-tab shrink-0 flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-green-200 bg-white text-stone-600 text-sm font-medium hover:border-green-500 hover:text-green-800 transition-all duration-200 cursor-pointer">
+      🥘 Food <span id="cnt-food" class="bg-green-50 text-stone-400 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+    </button>
+    <button onclick="filterCat(this,'drink')"   class="filter-tab shrink-0 flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-green-200 bg-white text-stone-600 text-sm font-medium hover:border-green-500 hover:text-green-800 transition-all duration-200 cursor-pointer">
+      🍹 Drinks <span id="cnt-drink" class="bg-green-50 text-stone-400 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+    </button>
+    <button onclick="filterCat(this,'dessert')" class="filter-tab shrink-0 flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-green-200 bg-white text-stone-600 text-sm font-medium hover:border-green-500 hover:text-green-800 transition-all duration-200 cursor-pointer">
+      🍰 Desserts <span id="cnt-dessert" class="bg-green-50 text-stone-400 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+    </button>
+  </div>
+</div>
+
+<!-- MENU CONTENT -->
+<div class="max-w-6xl mx-auto px-6 py-16 space-y-20" id="menuContent">
+
+  <!-- helper macro via JS to keep HTML clean -->
+  <script>
+    function card(emoji, name, desc, price, cat) {
+      return `
+      <div class="menu-card bg-white rounded-3xl overflow-hidden border border-green-100 cursor-pointer shadow-sm" onclick="addToCart('${name}','${price}')">
+        <div class="w-full h-56 bg-green-100 flex items-center justify-center text-8xl">${emoji}</div>
+        <div class="p-7">
+          <p class="font-bold text-xl text-stone-800">${name}</p>
+          <p class="text-sm text-stone-400 font-light mt-1.5 mb-6">${desc}</p>
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-green-700">${price}</span>
+            <button onclick="event.stopPropagation();addToCart('${name}','${price}')"
+              class="w-11 h-11 rounded-xl bg-green-100 hover:bg-green-500 hover:text-white text-green-800 text-2xl flex items-center justify-center transition-all duration-200 font-light shadow-sm">+</button>
+          </div>
+        </div>
+      </div>`;
+    }
+  </script>
+
+  <!-- FOOD -->
+  <div class="fade-up" data-category="food" id="cat-food">
+    <div class="flex items-center gap-4 mb-10">
+      <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center text-4xl shrink-0 shadow-sm">🥘</div>
+      <div>
+        <h2 class="font-display text-4xl font-bold text-green-900">Food</h2>
+        <p class="text-xs text-stone-400 mt-1">9 items available</p>
+      </div>
+      <div class="flex-1 h-px bg-gradient-to-r from-green-200 to-transparent ml-2"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="food-grid">
+      <script>
+        const foodItems = [
+          ['🧀','Margherita','Tomato, mozzarella, basil','$9.00'],
+          ['🍖','Pepperoni','Classic pepperoni & cheese','$11.00'],
+          ['🍗','BBQ Chicken','Smoky BBQ sauce, chicken','$12.50'],
+          ['🥦','Veggie Delight','Mixed fresh vegetables','$10.00'],
+          ['🍄','Mushroom','Wild mushroom blend','$10.50'],
+          ['🍍','Hawaiian','Ham, pineapple, cheese','$11.50'],
+          ['🧀','Four Cheese','Mozzarella, gouda, blue, parmesan','$13.00'],
+          ['🍲','Khmer Curry','Coconut milk, lemongrass','$8.50'],
+          ['🍜','Num Banh Chok','Khmer noodles, fresh herbs','$7.00'],
+        ];
+        document.write(foodItems.map(i=>card(...i,'food')).join(''));
+      </script>
+    </div>
+  </div>
+
+  <!-- DRINKS -->
+  <div class="fade-up" data-category="drink" id="cat-drink" style="animation-delay:0.1s">
+    <div class="flex items-center gap-4 mb-10">
+      <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center text-4xl shrink-0 shadow-sm">🍹</div>
+      <div>
+        <h2 class="font-display text-4xl font-bold text-green-900">Drinks</h2>
+        <p class="text-xs text-stone-400 mt-1">7 items available</p>
+      </div>
+      <div class="flex-1 h-px bg-gradient-to-r from-green-200 to-transparent ml-2"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="drink-grid">
+      <script>
+        const drinkItems = [
+          ['🍊','Orange Juice','Freshly squeezed','$4.00'],
+          ['☕','Espresso','Double shot, Italian blend','$3.50'],
+          ['🧃','Lemonade','House-made, mint garnish','$4.50'],
+          ['🍵','Green Tea','Premium Japanese matcha','$3.00'],
+          ['🥛','Milkshake','Vanilla, choc, or strawberry','$6.00'],
+          ['🧋','Bubble Tea','Taro, brown sugar, classic','$5.50'],
+          ['🍹','Sugarcane Juice','Fresh pressed, local cane','$2.50'],
+        ];
+        document.write(drinkItems.map(i=>card(...i,'drink')).join(''));
+      </script>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div class="fade-up" data-category="dessert" id="cat-dessert" style="animation-delay:0.2s">
+    <div class="flex items-center gap-4 mb-10">
+      <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center text-4xl shrink-0 shadow-sm">🍰</div>
+      <div>
+        <h2 class="font-display text-4xl font-bold text-green-900">Desserts</h2>
+        <p class="text-xs text-stone-400 mt-1">6 items available</p>
+      </div>
+      <div class="flex-1 h-px bg-gradient-to-r from-green-200 to-transparent ml-2"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="dessert-grid">
+      <script>
+        const dessertItems = [
+          ['🥭','Mango Sticky Rice','Sweet glutinous rice, coconut','$5.00'],
+          ['🍌','Banana Fritter','Crispy, sesame honey drizzle','$3.50'],
+          ['🥥','Coconut Pudding','Silky, pandan leaf infused','$4.00'],
+          ['🍮','Crème Caramel','Soft custard, caramel sauce','$4.50'],
+          ['🍦','Ice Cream','Durian, lychee, or vanilla','$3.00'],
+          ['🧁','Pandan Cake','Light sponge, fragrant pandan','$4.00'],
+        ];
+        document.write(dessertItems.map(i=>card(...i,'dessert')).join(''));
+      </script>
+    </div>
+  </div>
+
+  <div id="emptyState" class="hidden text-center py-24 text-stone-400">
+    <div class="text-6xl mb-4">🍽️</div>
+    <p class="text-base">No items found in this category.</p>
+  </div>
+
+</div>
+
+<!-- CART FAB -->
+<button id="cartFab" onclick="alert('Cart feature coming soon!')"
+  class="fixed bottom-7 right-7 z-50 flex items-center gap-3 bg-green-800 text-white px-7 py-4 rounded-full font-semibold text-sm shadow-2xl opacity-0 translate-y-5 pointer-events-none transition-all duration-300 hover:-translate-y-1">
+  🛒 My Order
+  <span id="cartCount" class="bg-white text-green-800 text-xs font-bold px-2.5 py-1 rounded-full min-w-[24px] text-center">0</span>
+</button>
+
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-28 right-7 z-50 bg-green-900 text-white text-sm font-medium px-5 py-3 rounded-2xl opacity-0 translate-y-2 pointer-events-none transition-all duration-300 max-w-xs shadow-xl"></div>
+
+<!-- FOOTER -->
+<footer class="bg-green-400 text-white mt-10">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="flex flex-col md:flex-row gap-10 mb-10">
+      <div class="md:w-1/4 flex flex-col items-center text-center">
+        <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center mb-4 shadow-lg">
+          <img src="../../asset/logo_malub-removebg-preview.png" alt="MALUB Logo" class="w-32 h-32 object-contain">
+        </div>
+        <p class="font-bold text-sm text-gray-900 mb-3">MALUB<br>Restaurant</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="#" class="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center hover:scale-110 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-black flex items-center justify-center hover:scale-110 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-[#229ED9] flex items-center justify-center hover:scale-110 transition">
+            <i class="fa-brands fa-telegram text-white text-lg"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
+            <i class="fa-brands fa-instagram text-white text-lg"></i>
+          </a>
+        </div>
+      </div>
+      <div class="md:w-1/4">
+        <h3 class="font-extrabold text-sm tracking-widest uppercase mb-5 text-gray-900">Explore</h3>
+        <ul class="space-y-2 text-sm text-gray-700">
+          <li><a href="./homePage.html"    class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="./menuPage.html"    class="hover:text-white transition-colors">Menu</a></li>
+          <li><a href="./aboutPage.html"   class="hover:text-white transition-colors">About Us</a></li>
+          <li><a href="./services.html"    class="hover:text-white transition-colors">Services</a></li>
+          <li><a href="./contactPage.html" class="hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div class="md:w-1/4">
+        <h3 class="font-extrabold text-sm tracking-widest uppercase mb-5 text-gray-900">Address</h3>
+        <p class="text-sm leading-relaxed mb-6 text-gray-700">No. 40, Street 273,<br>Sangkat Boeung Kak I,<br>Khan Toul Kork,<br>Phnom Penh, Cambodia</p>
+        <h3 class="font-extrabold text-sm tracking-widest uppercase mb-4 text-gray-900">Contacts</h3>
+        <ul class="space-y-2 text-sm text-gray-700">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-xs"></i> (+855) 17-928-998</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-xs"></i> (+855) 86-243-016</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-xs"></i> (+855) 97-297-7674</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-xs"></i> (+855) 69-298-825</li>
+        </ul>
+      </div>
+      <div class="md:w-1/4">
+        <h3 class="font-extrabold text-sm tracking-widest uppercase mb-5 text-gray-900">Follow Us</h3>
+        <div class="bg-white text-gray-800 rounded-xl p-3 flex items-center gap-3 shadow-lg">
+          <img src="../../asset/logo_malub-removebg-preview.png" alt="MALUB" class="w-12 h-12 rounded-full border-2 border-green-600 shrink-0">
+          <div>
+            <p class="font-semibold text-sm">MALUB Restaurant</p>
+            <p class="text-xs text-gray-500">Follow us on Facebook</p>
+            <button class="mt-1 text-xs text-blue-600 border border-blue-600 px-3 py-0.5 rounded-full flex items-center gap-1 hover:bg-blue-600 hover:text-white transition">
+              <i class="fa-brands fa-facebook text-xs"></i> Follow
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white py-5 px-6 text-center text-sm text-black">
+    © 2026 MALUB Restaurant | All Rights Reserved
+  </div>
+</footer>
+
+<script>
+  document.getElementById('mobileBtn').addEventListener('click',()=>{
+    const m=document.getElementById('mobileMenu');
+    m.style.display=m.style.display==='none'?'block':'none';
+  });
+
+  document.getElementById('cnt-all').textContent     = document.querySelectorAll('.menu-card').length;
+  document.getElementById('cnt-food').textContent    = document.querySelectorAll('#cat-food .menu-card').length;
+  document.getElementById('cnt-drink').textContent   = document.querySelectorAll('#cat-drink .menu-card').length;
+  document.getElementById('cnt-dessert').textContent = document.querySelectorAll('#cat-dessert .menu-card').length;
+
+  function filterCat(btn, target) {
+    document.querySelectorAll('.filter-tab').forEach(t=>{
+      t.classList.remove('bg-green-800','text-white','border-green-800');
+      t.classList.add('bg-white','text-stone-600','border-green-200');
+    });
+    btn.classList.remove('bg-white','text-stone-600','border-green-200');
+    btn.classList.add('bg-green-800','text-white','border-green-800');
+    let visible=0;
+    document.querySelectorAll('[data-category]').forEach(cat=>{
+      const show = target==='all'||cat.dataset.category===target;
+      cat.style.display=show?'':'none';
+      if(show) visible++;
+    });
+    document.getElementById('emptyState').classList.toggle('hidden',visible>0);
+  }
+
+  let cartCount=0;
+  function addToCart(name,price){
+    cartCount++;
+    document.getElementById('cartCount').textContent=cartCount;
+    const fab=document.getElementById('cartFab');
+    fab.classList.remove('opacity-0','translate-y-5','pointer-events-none');
+    fab.classList.add('opacity-100','translate-y-0');
+    showToast('✓ Added: '+name+' '+price);
+  }
+
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg;
+    t.classList.remove('opacity-0','translate-y-2');
+    t.classList.add('opacity-100','translate-y-0');
+    clearTimeout(t._t);
+    t._t=setTimeout(()=>{
+      t.classList.add('opacity-0','translate-y-2');
+      t.classList.remove('opacity-100','translate-y-0');
+    },2500);
+  }
+</script>
+</body>
+</html>

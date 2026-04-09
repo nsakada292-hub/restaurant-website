@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen - Scroll Up Reveal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f0f0f;
+            --accent: #c9a962;
+        }
+
+        /* Prevent scroll during loading */
+        body.loading {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Loading Screen - Full Coverage */
+        .loader-curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--primary);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: top;
+            will-change: transform;
+        }
+
+        /* When revealed, scrolls up */
+        .loader-curtain.revealed {
+            animation: scrollUp 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes scrollUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+
+        /* Content inside loader */
+        .loader-content {
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .loader-curtain.revealed .loader-content {
+            opacity: 0;
+        }
+
+        /* Brand Logo */
+        .loader-logo {
+            color: var(--accent);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+
+        /* Animated Line */
+        .loader-line {
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: lineExpand 1.2s ease 0.6s forwards;
+        }
+
+        /* Loading Bar Container */
+        .loader-bar-container {
+            width: 200px;
+            height: 1px;
+            background: rgba(201, 169, 98, 0.2);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.8s forwards;
+        }
+
+        /* Progress Fill */
+        .loader-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            transition: width 0.1s linear;
+        }
+
+        /* Percentage */
+        .loader-percent {
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            letter-spacing: 0.2em;
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 1s forwards;
+        }
+
+        /* Decorative Elements */
+        .loader-circle {
+            position: absolute;
+            border: 1px solid rgba(201, 169, 98, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .loader-circle-1 {
+            width: 400px;
+            height: 400px;
+            animation: rotate 30s linear infinite, fadeIn 1s ease 0.5s backwards;
+        }
+
+        .loader-circle-2 {
+            width: 600px;
+            height: 600px;
+            animation: rotate 40s linear infinite reverse, fadeIn 1s ease 0.7s backwards;
+        }
+
+        /* Corner Frames */
+        .corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--accent);
+            opacity: 0;
+        }
+
+        .corner-tl { 
+            top: 60px; 
+            left: 60px; 
+            border-right: 0; 
+            border-bottom: 0; 
+            animation: cornerIn 0.8s ease 1.2s forwards;
+        }
+        .corner-tr { 
+            top: 60px; 
+            right: 60px; 
+            border-left: 0; 
+            border-bottom: 0; 
+            animation: cornerIn 0.8s ease 1.3s forwards;
+        }
+        .corner-bl { 
+            bottom: 60px; 
+            left: 60px; 
+            border-right: 0; 
+            border-top: 0; 
+            animation: cornerIn 0.8s ease 1.4s forwards;
+        }
+        .corner-br { 
+            bottom: 60px; 
+            right: 60px; 
+            border-left: 0; 
+            border-top: 0; 
+            animation: cornerIn 0.8s ease 1.5s forwards;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes lineExpand {
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                width: 150px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes cornerIn {
+            to {
+                opacity: 0.4;
+            }
+        }
+
+        /* Optional: Alternative - Split Curtain (left/right) */
+        .loader-split {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 99999;
+            display: flex;
+            pointer-events: none;
+        }
+
+        .split-left,
+        .split-right {
+            width: 50%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+        }
+
+        .split-left {
+            transform-origin: left;
+        }
+
+        .split-right {
+            transform-origin: right;
+        }
+
+        .loader-split.revealed .split-left {
+            animation: splitLeft 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .loader-split.revealed .split-right {
+            animation: splitRight 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes splitLeft {
+            to { transform: scaleX(0); }
+        }
+
+        @keyframes splitRight {
+            to { transform: scaleX(0); }
+        }
+
+        /* Your Website Content */
+        .site-content {
+            min-height: 200vh;
+            background: linear-gradient(180deg, #faf9f6 0%, #f0f0f0 100%);
+            padding: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920') center/cover;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* Content Sections */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-family: Georgia, serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+        }
+
+        section p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.125rem;
+        }
+    </style>
+</head>
+<body class="loading">
+
+    <!-- VERSION 1: Scroll Up Curtain (Recommended) -->
+    <div class="loader-curtain" id="mainLoader">
+        <!-- Decorative Circles -->
+        <div class="loader-circle loader-circle-1"></div>
+        <div class="loader-circle loader-circle-2"></div>
+        
+        <!-- Corner Accents -->
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        
+        <!-- Center Content -->
+        <div class="loader-content">
+            <div class="loader-logo">L'ATELIER</div>
+            <div class="loader-line"></div>
+            <div class="loader-bar-container">
+                <div class="loader-bar-fill" id="progressBar"></div>
+            </div>
+            <div class="loader-percent" id="percentText">0%</div>
+        </div>
+    </div>
+
+    <!-- VERSION 2: Split Curtain (Uncomment to use instead) -->
+    <!--
+    <div class="loader-split" id="splitLoader">
+        <div class="split-left">
+            <span style="color: var(--accent); font-family: Georgia, serif; font-size: 2rem; letter-spacing: 0.5em;">L'AT</span>
+        </div>
+        <div class="split-right">
+            <span style="color: var(--accent); font-family: Georgia, serif; font-size: 2rem; letter-spacing: 0.5em;">ELIER</span>
+        </div>
+    </div>
+    -->
+
+    <!-- Website Content -->
+    <div class="site-content">
+        <header class="hero">
+            <div class="hero-content">
+                <h1>Welcome to<br><em style="color: #c9a962;">L'Atelier</em></h1>
+                <p>An intimate culinary experience where each dish tells a story of passion, precision, and the finest seasonal ingredients.</p>
+            </div>
+        </header>
+
+        <section>
+            <h2>Our Philosophy</h2>
+            <p>Under the guidance of our executive chef, we transform the finest ingredients into edible art. Each plate is a canvas, each flavor a brushstroke in a masterpiece of gastronomy. We believe that dining is not merely sustenance, but a journey of the senses.</p>
+        </section>
+
+        <section>
+            <h2>The Experience</h2>
+            <p>Our tasting menu evolves with nature's rhythm, featuring courses that surprise and delight. From the first amuse-bouche to the final petit four, every moment is crafted to create lasting memories.</p>
+        </section>
+    </div>
+
+    <script>
+        (function() {
+            const loader = document.getElementById('mainLoader');
+            const progressBar = document.getElementById('progressBar');
+            const percentText = document.getElementById('percentText');
+            const body = document.body;
+            
+            let progress = 0;
+            const duration = 3000; // 3 seconds loading time
+            const interval = 30;
+            const steps = duration / interval;
+            const increment = 100 / steps;
+            
+            // Simulate loading progress
+            const loadingInterval = setInterval(() => {
+                // Add some randomness for realistic feel
+                const randomIncrement = increment * (0.8 + Math.random() * 0.4);
+                progress += randomIncrement;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    
+                    // Brief pause at 100% before revealing
+                    setTimeout(revealContent, 400);
+                }
+                
+                // Update visual progress
+                progressBar.style.width = progress + '%';
+                percentText.textContent = Math.floor(progress) + '%';
+                
+            }, interval);
+            
+            function revealContent() {
+                // Add revealed class to trigger scroll up animation
+                loader.classList.add('revealed');
+                
+                // Re-enable scrolling
+                setTimeout(() => {
+                    body.classList.remove('loading');
+                }, 200);
+                
+                // Optional: Remove loader from DOM after animation
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 1500);
+            }
+            
+            // Alternative: Reveal on actual window load
+            // window.addEventListener('load', () => {
+            //     clearInterval(loadingInterval);
+            //     progress = 100;
+            //     progressBar.style.width = '100%';
+            //     percentText.textContent = '100%';
+            //     setTimeout(revealContent, 300);
+            // });
+        })();
+
+        // For Split Loader Version (if used)
+        /*
+        (function() {
+            const loader = document.getElementById('splitLoader');
+            const body = document.body;
+            
+            setTimeout(() => {
+                loader.classList.add('revealed');
+                setTimeout(() => {
+                    body.classList.remove('loading');
+                    loader.style.display = 'none';
+                }, 1000);
+            }, 2500);
+        })();
+        */
+    </script>
+
+</body>
+</html>

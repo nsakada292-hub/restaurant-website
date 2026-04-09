@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Store Hero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.classList.remove(currentTheme);
+            html.classList.add(newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Set initial theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(savedTheme);
+        })();
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(236, 72, 153, 0.6); }
+        }
+        
+        .float-shoe {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .wiggle {
+            animation: wiggle 0.5s ease-in-out;
+        }
+        
+        .glow-btn {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .bg-gradient-radial {
+            background: radial-gradient(circle at 30% 20%, #fbbf24, #ec4899, #8b5cf6);
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <!-- Theme Toggle Button -->
+    <button 
+        onclick="toggleTheme()" 
+        class="fixed top-6 right-6 z-50 p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:scale-110 transition-transform border-2 border-gray-200 dark:border-gray-700"
+        aria-label="Toggle theme"
+    >
+        <svg class="w-6 h-6 text-gray-800 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+        <svg class="w-6 h-6 text-yellow-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+    </button>
+
+    <section class="relative min-h-screen overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-300">
+        <!-- Animated background blobs -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-64 sm:w-96 h-64 sm:h-96 bg-pink-500 dark:bg-pink-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
+            <div class="absolute -bottom-40 -left-40 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 dark:opacity-10 animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute top-40 left-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 dark:opacity-10 animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center justify-between min-h-screen">
+            <!-- Left side: Text content -->
+            <div class="lg:w-1/2 text-gray-900 dark:text-white space-y-8 sm:space-y-8 text-center lg:text-left">
+                
+                
+                <!-- Main headline with gradient -->
+                <h1 class="text-5xl sm:text-6xl lg:text-8xl font-black leading-tight">
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600">
+                        WALK
+                    </span>
+                    <span class="block text-gray-900 dark:text-white">THE</span>
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-400">
+                        TALK
+                    </span>
+                </h1>
+                
+                <!-- Subheadline -->
+                <p class="text-base sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 max-w-lg mx-auto lg:mx-0">
+                    Shoes so fresh, they'll make your feet do a happy dance. 
+                    <span class="text-yellow-500 dark:text-yellow-400 font-bold">100% swagger guaranteed</span> 
+                    or your money back! 💸
+                </p>
+                
+                <!-- CTA buttons -->
+                <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start">
+                    <button class="glow-btn group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-bold text-base sm:text-lg overflow-hidden transform transition hover:scale-105 text-white shadow-xl">
+                        <span class="relative z-10">Shop Now</span>
+                        <span class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition"></span>
+                    </button>
+                    
+                    <button class="px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-full font-bold text-base sm:text-lg hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-gray-900 transition transform hover:scale-105 shadow-lg">
+                        View Collection
+                    </button>
+                </div>
+                
+                <!-- stats -->
+                <div class="flex flex-wrap gap-6 sm:gap-8 pt-6 sm:pt-8 justify-center lg:justify-start">
+                    <div>
+                        <div class="text-3xl sm:text-4xl font-bold text-yellow-500 dark:text-yellow-400">10K+</div>
+                        <div class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Happy Feet</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl sm:text-4xl font-bold text-pink-500">500+</div>
+                        <div class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Styles</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl sm:text-4xl font-bold text-purple-500 dark:text-purple-400">★ 4.9</div>
+                        <div class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Rating</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right side: Floating shoe -->
+            <div class="lg:w-1/2 mt-12 lg:mt-0 relative w-full max-w-md lg:max-w-lg mx-auto">
+                <div class="relative w-full">
+                    <!-- Decorative circles -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 border-2 sm:border-4 border-pink-500 dark:border-pink-400 border-dashed rounded-full opacity-20 animate-spin" style="animation-duration: 20s;"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-48 h-48 sm:w-60 sm:h-60 lg:w-72 lg:h-72 border-2 sm:border-4 border-purple-500 dark:border-purple-400 border-dashed rounded-full opacity-20 animate-spin" style="animation-duration: 15s; animation-direction: reverse;"></div>
+                    </div>
+                    
+                    <!-- Main shoe container -->
+                    <div class="float-shoe relative z-10 bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 p-1 rounded-2xl sm:rounded-3xl transform rotate-12 hover:rotate-0 transition duration-500 shadow-2xl">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+                            <!-- Placeholder for shoe image -->
+                            <div class="text-7xl sm:text-8xl lg:text-9xl text-center transform -rotate-45">
+                                👟
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating price tag -->
+                    <div class="absolute -bottom-6 -left-2 sm:-left-4 bg-yellow-400 text-gray-900 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-black text-base sm:text-xl shadow-2xl transform rotate-12 hover:rotate-0 transition">
+                        From $49.99
+                    </div>
+                    
+                    <!-- Floating badge -->
+                    <div class="absolute -top-10 -right-2 sm:-right-4 bg-pink-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm shadow-2xl transform -rotate-12 hover:rotate-0 transition">
+                        🔥 HOT SALE
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block">
+            <div class="w-6 h-10 border-2 border-gray-900 dark:border-white rounded-full flex justify-center pt-2">
+                <div class="w-1 h-3 bg-gray-900 dark:bg-white rounded-full"></div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
