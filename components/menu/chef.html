@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Team - Centered Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'chef-dark': '#1a1a1a',
+                        'chef-gold': '#d4af37',
+                        'chef-cream': '#e8f5e9',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chef-card {
+            transition: all 0.3s ease;
+        }
+        .chef-card:hover {
+            transform: translateY(-8px);
+        }
+        .chef-card:hover .chef-image {
+            transform: scale(1.05);
+        }
+        .chef-image {
+            transition: transform 0.5s ease;
+        }
+        .star-badge {
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-chef-cream min-h-screen">
+
+    <!-- Chef Team Section - Centered -->
+    <section class="py-16 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <span class="text-chef-gold text-sm font-semibold tracking-widest uppercase">Our Kitchen</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-chef-dark mt-2">Meet The Chefs</h2>
+                <p class="text-gray-600 mt-4 max-w-xl mx-auto">Passionate culinary artists dedicated to creating unforgettable dining experiences</p>
+            </div>
+
+            <!-- 5 Cards - Centered -->
+            <div class="flex flex-wrap justify-center gap-8 lg:gap-12 max-w-6xl mx-auto">
+
+                <!-- Chef 1 - Marcus Chen (Executive) -->
+                <div class="chef-card text-center w-40 sm:w-44">
+                    <div class="relative mx-auto w-32 h-32 sm:w-36 sm:h-36 mb-4">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-chef-gold to-yellow-500 p-1">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-white border-2 border-white">
+                                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=300&h=300&fit=crop&crop=face" 
+                                     alt="Marcus Chen" 
+                                     class="chef-image w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="star-badge absolute -top-1 -right-1 w-8 h-8 bg-chef-gold rounded-full flex items-center justify-center text-white text-sm border-2 border-white">
+                            ★
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-chef-dark">Marcus Chen</h3>
+                    <p class="text-chef-gold text-xs font-semibold uppercase tracking-wider mt-1">Executive Chef</p>
+                    <p class="text-gray-500 text-sm mt-2 leading-snug">French & Asian Fusion specialist with 15 years experience</p>
+                </div>
+
+                <!-- Chef 2 - James Wilson -->
+                <div class="chef-card text-center w-40 sm:w-44">
+                    <div class="relative mx-auto w-32 h-32 sm:w-36 sm:h-36 mb-4">
+                        <div class="absolute inset-0 rounded-full bg-gray-300 p-1">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-white border-2 border-white">
+                                <img src="https://images.unsplash.com/photo-1566554273541-37a9ca77b91f?w=300&h=300&fit=crop&crop=face" 
+                                     alt="James Wilson" 
+                                     class="chef-image w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-chef-dark">James Wilson</h3>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Grill Station</p>
+                    <p class="text-gray-500 text-sm mt-2 leading-snug">Meat specialist with focus on dry-aging techniques</p>
+                </div>
+
+                <!-- Chef 3 - Sophie Chen -->
+                <div class="chef-card text-center w-40 sm:w-44">
+                    <div class="relative mx-auto w-32 h-32 sm:w-36 sm:h-36 mb-4">
+                        <div class="absolute inset-0 rounded-full bg-gray-300 p-1">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-white border-2 border-white">
+                                <img src="https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?w=300&h=300&fit=crop&crop=face" 
+                                     alt="Sophie Chen" 
+                                     class="chef-image w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-chef-dark">Sophie Chen</h3>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Pastry Chef</p>
+                    <p class="text-gray-500 text-sm mt-2 leading-snug">Artistic desserts and chocolate work specialist</p>
+                </div>
+
+                <!-- Chef 4 - David Kim -->
+                <div class="chef-card text-center w-40 sm:w-44">
+                    <div class="relative mx-auto w-32 h-32 sm:w-36 sm:h-36 mb-4">
+                        <div class="absolute inset-0 rounded-full bg-gray-300 p-1">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-white border-2 border-white">
+                                <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=300&h=300&fit=crop&crop=face" 
+                                     alt="David Kim" 
+                                     class="chef-image w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-chef-dark">David Kim</h3>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Saucier</p>
+                    <p class="text-gray-500 text-sm mt-2 leading-snug">Master of French sauces and reductions</p>
+                </div>
+
+                <!-- Chef 5 - Anna Schmidt (NEW CARD ADDED) -->
+                <div class="chef-card text-center w-40 sm:w-44">
+                    <div class="relative mx-auto w-32 h-32 sm:w-36 sm:h-36 mb-4">
+                        <div class="absolute inset-0 rounded-full bg-gray-300 p-1">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-white border-2 border-white">
+                                <img src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=300&h=300&fit=crop&crop=face" 
+                                     alt="Anna Schmidt" 
+                                     class="chef-image w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-chef-dark">Anna Schmidt</h3>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Garde Manger</p>
+                    <p class="text-gray-500 text-sm mt-2 leading-snug">Cold kitchen and appetizer specialist</p>
+                </div>
+
+            </div>
+
+            <!-- View All Button -->
+            <div class="text-center mt-12">
+                <button class="px-8 py-3 border-2 border-chef-dark text-chef-dark font-semibold rounded-full hover:bg-chef-dark hover:text-white transition-all text-sm">
+                    View Full Team
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>

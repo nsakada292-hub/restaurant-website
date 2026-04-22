@@ -57,6 +57,85 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class' }</script>
 
+    <!-- Review -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: #f9fafb; }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 8px;
+            justify-content: center;
+        }
+        .star-rating input { display: none; }
+        .star-rating label {
+            font-size: 32px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #fbbf24;
+            transform: scale(1.1);
+        }
+
+        .review-card {
+            border-left: 4px solid #16a34a;
+            background: #f9fafb;
+            border-radius: 0 12px 12px 0;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        .review-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateX(4px);
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1f2937;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+        #toast.show { transform: translateY(0); opacity: 1; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
+    </style>
+
     <style>
         body { font-family: 'DM Sans', sans-serif; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -346,14 +425,14 @@ body.loading {
 
     <!-- Carousel -->
     <section class="bg-green-100 dark:bg-gray-950 py-20 px-4 transition-colors duration-300">
-        <div class="max-w-2xl mx-auto">
+        <div data-aos="zoom-in-up" class="max-w-2xl mx-auto">
 
     <div id="default-carousel" class="relative rounded-lg overflow-hidden shadow-lg" data-carousel="static">
         <!-- Carousel wrapper -->
         <div class="relative h-80 md:h-96" data-carousel-inner>
             <!-- Item 1 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://i.pinimg.com/736x/22/8f/28/228f28f6a88c2232fc7136f105135bb4.jpg"
+                <img src="./asset/image_member/photo_2026-04-09_07-39-14.jpg"
                     class="object-cover w-full h-full" alt="Slide 1">
                 <!-- <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-semibold text-white md:text-2xl dark:text-gray-800"></span> -->
             </div>
@@ -364,7 +443,7 @@ body.loading {
             </div>
             <!-- Item 3 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="./asset/image_member/photo_2026-04-09_07-39-14.jpg"
+                <img src="https://i.pinimg.com/736x/22/8f/28/228f28f6a88c2232fc7136f105135bb4.jpg"
                     class="object-cover w-full h-full" alt="Slide 3">
             </div>
         </div>
@@ -624,6 +703,157 @@ body.loading {
         </div>
     </section>
 
+    <!-- Review -->
+    <section class="bg-green-100 dark:bg-gray-950 py-20 px-4 transition-colors duration-300">
+        <div class="text-center mb-16" data-aos="zoom-in-down">
+            <span class="inline-block bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs font-bold px-4 py-2 rounded-full border border-green-200 dark:border-green-700 mb-4 tracking-widest uppercase">Ratings & Reviews</span>
+            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white tracking-tight">Guest <span class="text-green-600 dark:text-green-400 italic" style="font-family:'Cormorant Garamond',serif">Feedback</span></h1>
+            <p class="text-gray-400 dark:text-gray-500 font-light mt-3 text-sm tracking-wide">Every star tells a story of a memorable dining experience shared by our valued guests.</p>
+        </div>
+        <div class="max-w-5xl mx-auto">
+
+        <!-- User Header -->
+        <!-- <div class="bg-white rounded-2xl shadow-sm p-5 mb-5 animate-slide-up">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">JD</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Welcome, John!</h2>
+                        <p class="text-sm text-gray-500">john@example.com</p>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1.5">
+                            <i class="fas fa-check-circle"></i> Member since Today
+                        </span>
+                    </div>
+                </div>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition flex items-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </div> -->
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+            <!-- Left Column -->
+            <div data-aos="fade-right" class="lg:col-span-2 space-y-5">
+
+                <!-- Rate Your Visit -->
+                <div class="bg-white rounded-2xl shadow-sm p-5 animate-slide-up" style="animation-delay:0.1s">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                            <i class="fas fa-star text-yellow-400"></i> Rate Your Visit
+                        </h3>
+                        <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full" id="dash-date">Thu, Apr 9</span>
+                    </div>
+
+                    <!-- NO onsubmit on form -->
+                    <form>
+                        <div class="text-center py-4 mb-4">
+                            <p class="text-sm text-gray-600 mb-3">How was your experience on
+                                <span id="visit-date" class="font-semibold text-green-600">April 9</span>?
+                            </p>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5"><label for="star5"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1"><i class="fas fa-star"></i></label>
+                            </div>
+                            <p id="rating-label" class="text-sm font-medium text-gray-500 mt-2">Click to rate</p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">Your Review</label>
+                            <textarea id="review-text" rows="3" class="form-input resize-none" placeholder="Share your dining experience..." maxlength="500"></textarea>
+                            <div class="flex justify-between mt-1.5">
+                                <span class="text-xs text-gray-400">Min. 10 characters</span>
+                                <span class="text-xs text-gray-400" id="char-count">0/500</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <!-- FIX: type="button" prevents page refresh -->
+                            <button type="button" onclick="submitReview()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 px-4 rounded-lg transition flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i> Submit
+                            </button>
+                            <button type="button" onclick="clearReview()" class="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Your Reviews -->
+                <div class="bg-white rounded-2xl shadow-sm p-5 animate-slide-up" style="animation-delay:0.2s">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-history text-green-500"></i> Your Reviews
+                    </h3>
+                    <div id="reviews-list" class="space-y-3">
+                        <div class="text-center py-8 text-gray-400">
+                            <i class="fas fa-comment-slash text-3xl mb-2 opacity-50"></i>
+                            <p class="text-sm">No reviews yet. Share your first experience!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div data-aos="fade-left" class="space-y-5 self-start order-1 lg:order-2">
+ 
+                <!-- Your Stats -->
+                <div class="bg-white rounded-2xl shadow-sm p-5 animate-slide-up" style="animation-delay:0.3s">
+                    <h3 class="text-base font-bold text-gray-900 mb-3">Your Stats</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-xl">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <span class="text-sm font-medium text-gray-700">Avg Rating</span>
+                            </div>
+                            <span class="text-lg font-bold text-yellow-600" id="stat-avg">-</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-xl">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-comment text-blue-500"></i>
+                                <span class="text-sm font-medium text-gray-700">Reviews</span>
+                            </div>
+                            <span class="text-lg font-bold text-blue-600" id="stat-count">0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-purple-50 rounded-xl">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-calendar-check text-purple-500"></i>
+                                <span class="text-sm font-medium text-gray-700">Visits</span>
+                            </div>
+                            <span class="text-lg font-bold text-purple-600">1</span>
+                        </div>
+                    </div>
+                </div>
+ 
+                <!-- Quick Actions -->
+                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-sm p-5 text-white animate-slide-up" style="animation-delay:0.4s">
+                    <h3 class="text-base font-bold mb-3">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button type="button" class="w-full py-2.5 px-3 bg-white/20 hover:bg-white/30 rounded-lg transition text-sm font-medium flex items-center gap-2">
+                            <a href="./page/services.html"><i class="fas fa-utensils"></i> Book a Table</a>
+                        </button>
+                        <button type="button" class="w-full py-2.5 px-3 bg-white/20 hover:bg-white/30 rounded-lg transition text-sm font-medium flex items-center gap-2">
+                            <a href="./page/menuPage.html"><i class="fas fa-gift"></i> Explore Menu</a>
+                        </button>
+                        <button type="button" class="w-full py-2.5 px-3 bg-white/20 hover:bg-white/30 rounded-lg transition text-sm font-medium flex items-center gap-2">
+                            <a href="./page/aboutPage.html"><i class="fas fa-share-alt"></i> About Us</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Toast -->
+    <div id="toast">
+        <i id="toast-icon" class="fas fa-check-circle text-green-400"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+    </section>
+
     <!-- ── FOOTER ── -->
     <footer class="bg-green-800 dark:bg-gray-900 border-t border-green-700 dark:border-gray-800 text-white transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 py-14">
@@ -799,6 +1029,111 @@ body.loading {
 })();
     </script>
 
+    <!-- Review -->
+    <script>
+        let reviews = [];
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('visit-date').textContent = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+            const labels = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+            document.querySelectorAll('.star-rating input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const lbl = document.getElementById('rating-label');
+                    lbl.textContent = labels[e.target.value - 1];
+                    lbl.className = 'text-sm font-medium text-green-600 mt-2';
+                });
+            });
+
+            document.getElementById('review-text').addEventListener('input', (e) => {
+                document.getElementById('char-count').textContent = `${e.target.value.length}/500`;
+            });
+        });
+
+        // Submit review - no event parameter needed since button is type="button"
+        function submitReview() {
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const text = document.getElementById('review-text').value;
+
+            if (!rating) { showToast('Please select a rating', 'error'); return; }
+            if (text.length < 10) { showToast('Please write at least 10 characters', 'error'); return; }
+
+            reviews.unshift({
+                id: Date.now(),
+                rating: parseInt(rating.value),
+                text,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            });
+
+            renderReviews();
+            updateStats();
+            clearReview();
+            showToast('Review submitted!', 'success');
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-list');
+            if (reviews.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-400">
+                        <i class="fas fa-comment-slash text-3xl mb-2 opacity-50"></i>
+                        <p class="text-sm">No reviews yet. Share your first experience!</p>
+                    </div>`;
+                return;
+            }
+            container.innerHTML = reviews.map(r => `
+                <div class="review-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex gap-1 text-yellow-400 text-sm">
+                            ${Array(5).fill(0).map((_, i) => `<i class="${i < r.rating ? 'fas' : 'far'} fa-star"></i>`).join('')}
+                        </div>
+                        <span class="text-xs text-gray-400">${r.date}</span>
+                    </div>
+                    <p class="text-sm text-gray-700 leading-relaxed">${r.text}</p>
+                    <div class="mt-2 flex gap-3 text-xs">
+                        <button type="button" class="text-gray-400 hover:text-green-500 transition"><i class="far fa-thumbs-up"></i> Helpful</button>
+                        <button type="button" onclick="deleteReview(${r.id})" class="text-gray-400 hover:text-red-500 transition"><i class="far fa-trash-alt"></i> Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const count = reviews.length;
+            const avg = count > 0 ? (reviews.reduce((a, b) => a + b.rating, 0) / count).toFixed(1) : '-';
+            document.getElementById('stat-count').textContent = count;
+            document.getElementById('stat-avg').textContent = avg;
+        }
+
+        function deleteReview(id) {
+            reviews = reviews.filter(r => r.id !== id);
+            renderReviews();
+            updateStats();
+            showToast('Review deleted', 'success');
+        }
+
+        function clearReview() {
+            document.querySelectorAll('.star-rating input').forEach(i => i.checked = false);
+            document.getElementById('review-text').value = '';
+            document.getElementById('char-count').textContent = '0/500';
+            const lbl = document.getElementById('rating-label');
+            lbl.textContent = 'Click to rate';
+            lbl.className = 'text-sm font-medium text-gray-500 mt-2';
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            document.getElementById('toast-icon').className = type === 'success'
+                ? 'fas fa-check-circle text-green-400'
+                : 'fas fa-exclamation-circle text-red-400';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
